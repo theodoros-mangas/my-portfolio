@@ -3,7 +3,7 @@ const terminalBody = document.getElementById('terminalBody');
 const MATRIX_MODE_CLASS = 'matrixmode-active';
 
 const commands = {
-  whoami: {
+  whoareyou: {
     description: 'Display current user',
     execute: () => 'Theodoros Mangas — Software Engineer (Python/Django)'
   },
@@ -67,8 +67,8 @@ const commands = {
     execute: () => {
       const isActive = document.body.classList.toggle(MATRIX_MODE_CLASS);
       return isActive
-        ? '<span class="text-muted">matrixmode enabled</span>'
-        : '<span class="text-muted">matrixmode disabled</span>';
+        ? '<span class="text-secondary">matrixmode enabled</span>'
+        : '<span class="text-secondary">matrixmode disabled</span>';
     }
   }
 };
