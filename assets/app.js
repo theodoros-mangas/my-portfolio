@@ -136,15 +136,17 @@ function clearCommandDisplay() {
 }
 
 function handleCommand(input) {
-  // Remove cursor from last line
-  const cursor = terminalBody.querySelector('.cursor');
-  if (cursor) cursor.remove();
-
-  // Add the command line
-  const commandLine = document.createElement('div');
-  commandLine.className = 'line';
-  commandLine.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
-  terminalBody.appendChild(commandLine);
+  // Reuse the active prompt line when available to avoid duplicate command rows
+  const activePrompt = terminalBody.querySelector('.line:last-child');
+  if (activePrompt && activePrompt.querySelector('.cursor')) {
+    activePrompt.className = 'line';
+    activePrompt.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
+  } else {
+    const commandLine = document.createElement('div');
+    commandLine.className = 'line';
+    commandLine.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
+    terminalBody.appendChild(commandLine);
+  }
 
   // Process command
   const [cmd, ...args] = input.split(' ');
