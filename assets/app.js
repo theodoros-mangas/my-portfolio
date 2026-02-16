@@ -4,7 +4,7 @@ const terminalBody = document.getElementById('terminalBody');
 const commands = {
   whoami: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas — Python/Django Full-Stack Engineer'
+    execute: () => 'Theodoros Mangas — Software Engineer (Python/Django)'
   },
   projects: {
     description: 'View my projects',
