@@ -42,23 +42,15 @@ const commands = {
       return 'Navigating to contact section...';
     }
   },
-  matrixmode: {
-    description: 'Toggle Matrix background mode',
-    execute: () => {
-      const isActive = document.body.classList.toggle(MATRIX_MODE_CLASS);
-      return isActive
-        ? '<span class="text-muted">matrixmode enabled</span>'
-        : '<span class="text-muted">matrixmode disabled</span>';
-    }
-  },
   help: {
     description: 'Display available commands',
     execute: () => {
       let helpText = '<span class="hint">Available commands:</span><div class="mt-2">';
-      Object.entries(commands).forEach(([cmd, obj]) => {
-        const cmdClass = cmd === 'matrixmode' ? 'text-muted' : 'text-success';
-        helpText += `<div><span class="${cmdClass}">${cmd}</span> — ${obj.description}</div>`;
-      });
+      Object.entries(commands)
+        .filter(([cmd]) => cmd !== 'matrixmode')
+        .forEach(([cmd, obj]) => {
+          helpText += `<div><span class="text-success">${cmd}</span> — ${obj.description}</div>`;
+        });
       helpText += '</div>';
       return helpText;
     }
@@ -68,6 +60,15 @@ const commands = {
     execute: () => {
       // Signal handled by handleCommand: do not modify DOM here
       return null;
+    }
+  },
+  matrixmode: {
+    description: '',
+    execute: () => {
+      const isActive = document.body.classList.toggle(MATRIX_MODE_CLASS);
+      return isActive
+        ? '<span class="text-muted">matrixmode enabled</span>'
+        : '<span class="text-muted">matrixmode disabled</span>';
     }
   }
 };
