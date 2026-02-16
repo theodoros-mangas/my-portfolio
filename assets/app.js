@@ -188,9 +188,32 @@ function addOutput(output) {
   terminalBody.appendChild(outputLine);
 }
 
+function initializeBackToTop() {
+  const backToTop = document.getElementById('backToTop');
+  if (!backToTop) return;
+
+  const toggleButtonVisibility = () => {
+    const shouldShow = window.scrollY > window.innerHeight * 0.7;
+    backToTop.classList.toggle('is-visible', shouldShow);
+  };
+
+  backToTop.addEventListener('click', () => {
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({
+      top: 0,
+      behavior: prefersReducedMotion ? 'auto' : 'smooth'
+    });
+  });
+
+  window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+  window.addEventListener('resize', toggleButtonVisibility);
+  toggleButtonVisibility();
+}
+
 // Handle chip clicks (existing functionality)
 document.addEventListener('DOMContentLoaded', () => {
   initializeTerminal();
+  initializeBackToTop();
   
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', () => {

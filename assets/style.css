@@ -178,3 +178,48 @@ body { color: var(--text); }
   overflow-y: auto;
   cursor: text;
 }
+
+.back-to-top{
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 1100;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid rgba(121,242,255,0.55);
+  background: #153347;
+  color: var(--accent);
+  font-size: 1.3rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease, border-color 0.25s ease;
+}
+
+.back-to-top.is-visible{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.back-to-top:hover{
+  border-color: rgba(154,255,121,0.75);
+  color: var(--accent2);
+}
+
+.back-to-top:focus-visible{
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .back-to-top{
+    transition: none;
+  }
+}
