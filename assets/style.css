@@ -1,0 +1,180 @@
+:root{
+  --bg: #0b1020;
+  --panel: rgba(255,255,255,0.04);
+  --border: rgba(255,255,255,0.08);
+  --text: rgba(255,255,255,0.92);
+  --muted: rgba(255,255,255,0.62);
+  --accent: #79f2ff;
+  --accent2: #9aff79;
+  --danger: #ff6b6b;
+  --warn: #ffd166;
+}
+
+.bg-dev { background: radial-gradient(1200px 600px at 20% 10%, rgba(121,242,255,0.12), transparent 60%),
+                    radial-gradient(900px 500px at 90% 40%, rgba(154,255,121,0.10), transparent 55%),
+                    var(--bg); }
+
+body { color: var(--text); }
+
+.brand { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+.dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; opacity:0.9; }
+.dot-red{ background: var(--danger); }
+.dot-yellow{ background: var(--warn); }
+.dot-green{ background: var(--accent2); }
+
+.btn-dev{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+}
+.btn-dev:hover{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
+
+.btn-dev-primary{
+  border: 1px solid rgba(121,242,255,0.35);
+  background: rgba(121,242,255,0.10);
+  color: var(--text);
+  font-family: ui-monospace, monospace;
+}
+.btn-dev-primary:hover{ background: rgba(121,242,255,0.16); }
+
+.terminal{
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.35);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.terminal-bar{
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: ui-monospace, monospace;
+  background: rgba(255,255,255,0.03);
+}
+.terminal-body{
+  padding: 16px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+.line{ white-space: pre-wrap; }
+.prompt{ color: var(--accent2); }
+.path{ color: var(--accent); }
+.cmd{ color: rgba(255,255,255,0.9); }
+.output{ color: var(--muted); }
+
+.cursor{
+  display:inline-block;
+  width: 10px;
+  height: 1.1em;
+  background: rgba(255,255,255,0.75);
+  animation: blink 1s steps(2, start) infinite;
+  transform: translateY(2px);
+}
+@keyframes blink { to { visibility: hidden; } }
+
+.chip{
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.85rem;
+}
+.chip:hover{ border-color: rgba(255,255,255,0.25); }
+
+.panel{
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.panel-title{
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  font-family: ui-monospace, monospace;
+  color: rgba(255,255,255,0.85);
+  background: rgba(255,255,255,0.02);
+}
+.panel-body{ padding: 14px; }
+
+@media (min-width: 992px){
+  /* Keep README and projects panels the same height on desktop. */
+  #about.panel,
+  #projects.panel{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #about .panel-body,
+  #projects .panel-body{
+    flex: 1;
+  }
+}
+
+.tag{
+  display:inline-block;
+  border: 1px solid rgba(154,255,121,0.25);
+  background: rgba(154,255,121,0.08);
+  border-radius: 999px;
+  padding: 4px 10px;
+  margin-right: 6px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  font-family: ui-monospace, monospace;
+}
+
+.divider{ border-color: rgba(255,255,255,0.10); }
+
+.link-dev{
+  color: var(--accent);
+  text-decoration: none;
+  font-family: ui-monospace, monospace;
+}
+.link-dev:hover{ text-decoration: underline; }
+
+.repo-grid{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+}
+@media (max-width: 992px){
+  .repo-grid{ grid-template-columns: 1fr; }
+}
+.repo-card{
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: rgba(0,0,0,0.20);
+  text-decoration: none;
+  color: var(--text);
+}
+.repo-card:hover{
+  border-color: rgba(121,242,255,0.30);
+  background: rgba(0,0,0,0.28);
+}
+
+/* CLI Styles */
+.hint{
+  color: rgba(255,255,255,0.65);
+}
+.text-success{
+  color: var(--accent2);
+}
+.text-muted{
+  color: var(--muted);
+}
+.error{
+  color: var(--danger);
+}
+.terminal-body{
+  /* Fixed base height with a responsive cap to avoid layout break
+     - `height` keeps the terminal from growing too tall by default
+     - `max-height: 60vh` ensures it scales on small viewports
+     - `overflow-y: auto` keeps content scrollable */
+  height: 320px;
+  max-height: 60vh;
+  overflow-y: auto;
+  cursor: text;
+}
