@@ -16,14 +16,14 @@ const commands = {
   cv: {
     description: 'Download my CV',
     execute: () => {
-      window.open('assets/Theodoros_Mangas_CV.pdf', '_blank');
+      window.open('assets/files/Theodoros_Mangas_CV.pdf', '_blank');
       return 'Opening CV...';
     }
   },
   github: {
     description: 'Visit my GitHub profile',
     execute: () => {
-      window.open('https://github.com/YOUR_GITHUB', '_blank');
+      window.open('hhttps://github.com/theodoros-mangas', '_blank');
       return 'Opening GitHub...';
     }
   },
