@@ -32,7 +32,7 @@ Update section content in index.html
 Adjust visual styles in style.css
 Update interactive behavior in app.js
 Deployment
-This is a static site and can be deployed on any static hosting platform (GitHub Pages, Netlify, Vercel, Cloudflare Pages, etc.).
+https://theodoros-mangas.github.io/my-portfolio/
 
 License
 Personal portfolio project.
