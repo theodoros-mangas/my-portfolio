@@ -16,6 +16,13 @@
 
 body { color: var(--text); }
 
+body.matrixmode-active.bg-dev{
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
+    url('https://i.gifer.com/3HeL.gif') center center / cover fixed no-repeat,
+    var(--bg);
+}
+
 .brand { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
 
 .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; opacity:0.9; }
