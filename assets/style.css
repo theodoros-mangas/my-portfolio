@@ -64,7 +64,6 @@ body.matrixmode-active.bg-dev{
   font-size: 0.95rem;
   line-height: 1.55;
 }
-.line{ white-space: pre-wrap; }
 .prompt{ color: var(--accent2); }
 .path{ color: var(--accent); }
 .cmd{ color: rgba(255,255,255,0.9); }

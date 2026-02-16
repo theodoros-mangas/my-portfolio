@@ -132,6 +132,22 @@ function initializeTerminal() {
   setTimeout(() => {
     terminalInput.focus();
   }, 100);
+
+  // Keep startup aligned with normal CLI behavior:
+  // show the active prompt position reliably on first load and restore.
+  const scrollToLatestPrompt = () => {
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+  };
+  const scheduleInitialSync = () => {
+    requestAnimationFrame(scrollToLatestPrompt);
+    setTimeout(scrollToLatestPrompt, 80);
+    setTimeout(scrollToLatestPrompt, 240);
+    setTimeout(scrollToLatestPrompt, 600);
+  };
+
+  scheduleInitialSync();
+  window.addEventListener('load', scrollToLatestPrompt, { once: true });
+  window.addEventListener('pageshow', scrollToLatestPrompt);
 }
 
 function updateCommandDisplay(text) {
