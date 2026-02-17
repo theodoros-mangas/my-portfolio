@@ -73,6 +73,10 @@ const commands = {
   }
 };
 
+// Command history for bash console
+let commandHistory = [];
+let historyIndex = -1;
+
 // Initialize terminal input
 function initializeTerminal() {
   const terminalInput = document.createElement('input');
@@ -116,9 +120,44 @@ function initializeTerminal() {
       clearCommandDisplay();
       
       if (input) {
+        addCommandToHistory(input);
         handleCommand(input);
         // Re-focus after command
         setTimeout(() => terminalInput.focus(), 0);
+      }
+    }
+  });
+
+  // Handle up/down arrow for command history
+  terminalInput.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowUp') {
+      if (commandHistory.length > 0) {
+        if (historyIndex === -1) {
+          historyIndex = commandHistory.length - 1;
+        } else if (historyIndex > 0) {
+          historyIndex--;
+        }
+        terminalInput.value = commandHistory[historyIndex];
+        updateCommandDisplay(terminalInput.value);
+        setTimeout(() => {
+          terminalInput.selectionStart = terminalInput.selectionEnd = terminalInput.value.length;
+        }, 0);
+        e.preventDefault();
+      }
+    } else if (e.key === 'ArrowDown') {
+      if (commandHistory.length > 0 && historyIndex !== -1) {
+        if (historyIndex < commandHistory.length - 1) {
+          historyIndex++;
+          terminalInput.value = commandHistory[historyIndex];
+        } else {
+          historyIndex = -1;
+          terminalInput.value = '';
+        }
+        updateCommandDisplay(terminalInput.value);
+        setTimeout(() => {
+          terminalInput.selectionStart = terminalInput.selectionEnd = terminalInput.value.length;
+        }, 0);
+        e.preventDefault();
       }
     }
   });
@@ -148,6 +187,13 @@ function initializeTerminal() {
   scheduleInitialSync();
   window.addEventListener('load', scrollToLatestPrompt, { once: true });
   window.addEventListener('pageshow', scrollToLatestPrompt);
+}
+
+function addCommandToHistory(cmd) {
+  if (cmd && (commandHistory.length === 0 || commandHistory[commandHistory.length - 1] !== cmd)) {
+    commandHistory.push(cmd);
+  }
+  historyIndex = -1;
 }
 
 function updateCommandDisplay(text) {
