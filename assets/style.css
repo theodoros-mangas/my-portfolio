@@ -15,6 +15,11 @@
                     var(--bg); }
 
 body { color: var(--text); }
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
 body.matrixmode-active.bg-dev{
   background:
@@ -105,7 +110,6 @@ body.matrixmode-active.bg-dev{
 .panel-body{ padding: 14px; }
 
 @media (min-width: 992px){
-  /* Keep README and projects panels the same height on desktop. */
   #about.panel,
   #projects.panel{
     height: 100%;
@@ -116,6 +120,40 @@ body.matrixmode-active.bg-dev{
   #about .panel-body,
   #projects .panel-body{
     flex: 1;
+  }
+
+  #projects .panel-body{
+    max-height: clamp(380px, 55vh, 620px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(121,242,255,0.45) rgba(255,255,255,0.06);
+  }
+
+  #projects .panel-body::-webkit-scrollbar{
+    width: 10px;
+  }
+
+  #projects .panel-body::-webkit-scrollbar-track{
+    background: rgba(255,255,255,0.06);
+    border-radius: 999px;
+  }
+
+  #projects .panel-body::-webkit-scrollbar-thumb{
+    background: linear-gradient(
+      180deg,
+      rgba(121,242,255,0.5),
+      rgba(154,255,121,0.4)
+    );
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 999px;
+  }
+
+  #projects .panel-body::-webkit-scrollbar-thumb:hover{
+    background: linear-gradient(
+      180deg,
+      rgba(121,242,255,0.7),
+      rgba(154,255,121,0.58)
+    );
   }
 }
 
@@ -161,7 +199,6 @@ body.matrixmode-active.bg-dev{
   background: rgba(0,0,0,0.28);
 }
 
-/* CLI Styles */
 .hint{
   color: rgba(255,255,255,0.65);
 }
@@ -175,10 +212,6 @@ body.matrixmode-active.bg-dev{
   color: var(--danger);
 }
 .terminal-body{
-  /* Fixed base height with a responsive cap to avoid layout break
-     - `height` keeps the terminal from growing too tall by default
-     - `max-height: 60vh` ensures it scales on small viewports
-     - `overflow-y: auto` keeps content scrollable */
   height: 320px;
   max-height: 60vh;
   overflow-y: auto;

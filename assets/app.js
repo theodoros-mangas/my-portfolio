@@ -271,22 +271,36 @@ function addOutput(output) {
 
 function initializeBackToTop() {
   const backToTop = document.getElementById('backToTop');
+  const scrollContainer = document.querySelector('.portfolio-container');
   if (!backToTop) return;
 
   const toggleButtonVisibility = () => {
-    const shouldShow = window.scrollY > window.innerHeight * 0.7;
+    const scrollTop = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
+    const viewportHeight = scrollContainer ? scrollContainer.clientHeight : window.innerHeight;
+    const shouldShow = scrollTop > viewportHeight * 0.7;
     backToTop.classList.toggle('is-visible', shouldShow);
   };
 
   backToTop.addEventListener('click', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({
-      top: 0,
-      behavior: prefersReducedMotion ? 'auto' : 'smooth'
-    });
+    if (scrollContainer) {
+      scrollContainer.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth'
+      });
+    }
   });
 
-  window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+  if (scrollContainer) {
+    scrollContainer.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+  } else {
+    window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+  }
   window.addEventListener('resize', toggleButtonVisibility);
   toggleButtonVisibility();
 }
