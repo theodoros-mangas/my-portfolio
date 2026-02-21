@@ -1,39 +1,52 @@
-# my-portfolio
-Portfolio of a software engineer focused on building reliable, maintainable web applications with clean architecture, strong validation, and user-centered design.
+# Theodoros Mangas - Software Engineering Portfolio
 
-My Portfolio
-A software-engineering focused portfolio website built to present projects, technical approach, and development standards in a clear, production-minded format.
+This repository contains my personal portfolio website: a concise, production-minded presentation of my software engineering work, technical focus, and implementation standards.
 
-Overview
-This repository contains a lightweight personal portfolio site that emphasizes:
+## Focus
 
-Clean architecture and maintainable structure
-Clear communication of project scope and impact
-Reliability, consistency, and usability in frontend delivery
-Engineering Principles
-Build for clarity first: simple structure, readable code, predictable behavior
-Prefer maintainability over complexity: reusable patterns, minimal duplication
-Treat quality as a default: validation, accessibility, and responsive design
-Optimize for iteration: easy to update content and expand sections over time
-Tech Stack
-HTML5
-CSS3
-JavaScript (vanilla)
-Bootstrap 5
+- Full-stack web development with Python/Django foundations
+- GIS-oriented workflows and practical engineering tooling
+- Clean architecture, validation-first logic, and maintainable systems
+- Clear UI/UX with reliability and usability as defaults
 
-Run Locally
-Clone the repository.
-Open index.html in your browser.
-Optional (recommended for cleaner local testing):
+## What This Portfolio Highlights
 
-Run a local static server (for example, VS Code Live Server).
-Customization
-Update section content in index.html
-Adjust visual styles in style.css
-Update interactive behavior in app.js
-Deployment
-https://theodoros-mangas.github.io/my-portfolio/
+- Real-world projects and platform architecture decisions
+- Engineering approach across backend, frontend, and data workflows
+- Practical delivery standards: structure, consistency, and scalability
 
-License
+## Core Principles
+
+- Clarity first: readable code, predictable behavior, and straightforward structure
+- Maintainability over complexity: reusable patterns and low duplication
+- Quality by default: accessibility, validation, and responsive design
+- Iteration readiness: easy to update, extend, and refine over time
+
+## Tech Stack (Website)
+
+- HTML5
+- CSS3
+- JavaScript (Vanilla)
+- Bootstrap 5
+
+## Run Locally
+
+1. Clone the repository.
+2. Open `index.html` in your browser.
+
+Optional:
+- Use a static server (for example, VS Code Live Server) for cleaner local testing.
+
+## Update Content
+
+- Main content: `index.html`
+- Styles: `assets/style.css`
+- Interactions: `assets/app.js`
+
+## Live Portfolio
+
+`https://theodoros-mangas.github.io/my-portfolio/`
+
+## License
+
 Personal portfolio project.
-You can adapt the structure for your own portfolio with attribution if desired.
