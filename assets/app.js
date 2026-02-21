@@ -28,6 +28,13 @@ const commands = {
       return 'Opening GitHub...';
     }
   },
+  email: {
+    description: 'Send me an email',
+    execute: () => {
+      window.location.href = 'mailto:magg_theod@live.com';
+      return 'Opening email client...';
+    }
+  },
   about: {
     description: 'Read about me',
     execute: () => {
