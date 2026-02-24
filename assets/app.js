@@ -28,6 +28,13 @@ const commands = {
       return 'Opening GitHub...';
     }
   },
+  linkedin: {
+    description: 'Visit my LinkedIn profile',
+    execute: () => {
+      window.open('https://www.linkedin.com/in/theodorosmaggas/', '_blank');
+      return 'Opening LinkedIn...';
+    }
+  },
   email: {
     description: 'Send me an email',
     execute: () => {
