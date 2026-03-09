@@ -93,6 +93,9 @@ let historyIndex = -1;
 
 // Initialize terminal input
 function initializeTerminal() {
+  // Mobile detection (simple):
+  const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+
   const terminalInput = document.createElement('input');
   terminalInput.type = 'text';
   terminalInput.id = 'cliInput';
@@ -103,21 +106,23 @@ function initializeTerminal() {
   terminalInput.setAttribute('autocorrect', 'off');
   terminalInput.setAttribute('autocapitalize', 'off');
   terminalInput.setAttribute('spellcheck', 'false');
-  
+  terminalInput.setAttribute('maxlength', '256');
+
   // Style the input to be functional and capture input
   terminalInput.style.position = 'fixed';
   terminalInput.style.left = '-9999px';
   terminalInput.style.top = '-9999px';
   terminalInput.style.opacity = '0';
   terminalInput.style.pointerEvents = 'none';
-  
+
   document.body.appendChild(terminalInput);
 
   // Focus on terminal body click - prevent scroll
   terminalBody.addEventListener('click', (e) => {
+    // Only focus on user tap/click, never programmatically on load/blur
     e.preventDefault();
     const scrollPos = terminalBody.scrollTop;
-    terminalInput.focus();
+    terminalInput.focus({ preventScroll: true });
     terminalBody.scrollTop = scrollPos;
   });
 
@@ -132,12 +137,14 @@ function initializeTerminal() {
       const input = terminalInput.value.trim().toLowerCase();
       terminalInput.value = '';
       clearCommandDisplay();
-      
+
       if (input) {
         addCommandToHistory(input);
         handleCommand(input);
-        // Re-focus after command
-        setTimeout(() => terminalInput.focus(), 0);
+        // Re-focus after command (desktop only)
+        if (!isMobile) {
+          setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
+        }
       }
     }
   });
@@ -175,16 +182,18 @@ function initializeTerminal() {
       }
     }
   });
-  
-  // Keep focus on terminal
-  terminalInput.addEventListener('blur', () => {
-    setTimeout(() => terminalInput.focus(), 0);
-  });
 
-  // Auto-focus on load
-  setTimeout(() => {
-    terminalInput.focus();
-  }, 100);
+  // Do NOT keep focus on terminal on blur (removes scroll jump on mobile)
+  // Only auto-focus on load for desktop
+  if (!isMobile) {
+    setTimeout(() => {
+      terminalInput.focus({ preventScroll: true });
+    }, 100);
+    // Keep focus on blur for desktop
+    terminalInput.addEventListener('blur', () => {
+      setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
+    });
+  }
 
   // Keep startup aligned with normal CLI behavior:
   // show the active prompt position reliably on first load and restore.
@@ -236,10 +245,35 @@ function handleCommand(input) {
     terminalBody.appendChild(commandLine);
   }
 
+
   // Process command
   const [cmd, ...args] = input.split(' ');
-  
-  if (cmd === '/help' || cmd === 'help') {
+  const normalizedInput = input.trim().toLowerCase();
+
+  // --- Silent/fun commands ---
+  if (normalizedInput === 'hello world' || normalizedInput === 'hello world!') {
+    addOutput('print("Hello world!")');
+  } else if (normalizedInput === 'cls') {
+    terminalBody.innerHTML = '';
+    // Add new prompt after clear
+    const newPrompt = document.createElement('div');
+    newPrompt.className = 'line mt-2';
+    newPrompt.innerHTML = '<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
+    terminalBody.appendChild(newPrompt);
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+    return;
+  } else if (normalizedInput === 'sudo' || normalizedInput.startsWith('sudo ')) {
+    addOutput('Permission denied: You are not root.');
+  } else if (normalizedInput === '42') {
+    addOutput('The answer to life, the universe, and everything.');
+  } else if (normalizedInput === 'ping') {
+    // Add date and time in front of Pong!
+    const now = new Date();
+    const pad = n => n.toString().padStart(2, '0');
+    const time = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+    const date = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
+    addOutput(`[${time} - ${date}] Pong!`);
+  } else if (cmd === '/help' || cmd === 'help') {
     // Help command
     const output = commands.help.execute();
     addOutput(output);
