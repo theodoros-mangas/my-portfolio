@@ -262,6 +262,21 @@ function handleCommand(input) {
     terminalBody.appendChild(newPrompt);
     terminalBody.scrollTop = terminalBody.scrollHeight;
     return;
+  } else if (normalizedInput === 'ls' || normalizedInput === 'ls -la' || normalizedInput === 'tree') {
+    addOutput(
+      '<pre class="mb-0" style="font-size:.85em;line-height:1.4">' +
+      'theodoros/portfolio\n' +
+      '├── index.html\n' +
+      '├── README.md\n' +
+      '├── LICENSE\n' +
+      '└── assets/\n' +
+      '    ├── app.js\n' +
+      '    ├── style.css\n' +
+      '    ├── files/\n' +
+      '    │   └── Theodoros_Mangas_CV.pdf\n' +
+      '    └── img/\n' +
+      '        └── favicon.png</pre>'
+    );
   } else if (normalizedInput === 'sudo' || normalizedInput.startsWith('sudo ')) {
     addOutput('Permission denied: You are not root.');
   } else if (normalizedInput === '42') {
