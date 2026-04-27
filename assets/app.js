@@ -221,7 +221,7 @@ function addCommandToHistory(cmd) {
 
 function updateCommandDisplay(text) {
   let lastLine = terminalBody.querySelector('.line:last-child');
-  
+
   if (lastLine) {
     // Update the existing last line instead of creating a new one
     lastLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${text}</span><span class="cursor" aria-hidden="true"></span>`;
@@ -285,6 +285,8 @@ function handleCommand(input) {
     addOutput('You are now inside vim. Good luck getting out.');
   } else if (normalizedInput === 'exit' || normalizedInput === 'logout') {
     addOutput('Nice try. There is no escape.');
+  } else if (normalizedInput === 'quit') {
+    addOutput('No quitters here.');
   } else if (normalizedInput === 'pwd') {
     addOutput('/home/theodoros/portfolio');
   } else if (normalizedInput === 'whoami') {
@@ -381,7 +383,7 @@ function initializeBackToTop() {
 document.addEventListener('DOMContentLoaded', () => {
   initializeTerminal();
   initializeBackToTop();
-  
+
   document.querySelectorAll('.chip').forEach(chip => {
     chip.addEventListener('click', () => {
       const cmd = chip.getAttribute('data-cmd');
