@@ -279,6 +279,22 @@ function handleCommand(input) {
     );
   } else if (normalizedInput === 'sudo' || normalizedInput.startsWith('sudo ')) {
     addOutput('Permission denied: You are not root.');
+  } else if (normalizedInput === 'rm -rf /' || normalizedInput === 'rm -rf *' || normalizedInput === 'rm -rf') {
+    addOutput('Nice try. This portfolio is read-only.');
+  } else if (normalizedInput === 'vim' || normalizedInput === 'vi') {
+    addOutput('You are now inside vim. Good luck getting out.');
+  } else if (normalizedInput === 'exit' || normalizedInput === 'logout') {
+    addOutput('Nice try. There is no escape.');
+  } else if (normalizedInput === 'pwd') {
+    addOutput('/home/theodoros/portfolio');
+  } else if (normalizedInput === 'whoami') {
+    addOutput('visitor — but you\'re welcome here.');
+  } else if (normalizedInput === ':(){ :|:& };:') {
+    addOutput('Fork bomb detected. Nice try.');
+  } else if (normalizedInput === 'make coffee') {
+    addOutput('Error: No coffee machine connected to /dev/usb0.');
+  } else if (normalizedInput === 'git blame') {
+    addOutput('Blaming theodoros... (100% of commits, as expected)');
   } else if (normalizedInput === '42') {
     addOutput('The answer to life, the universe, and everything.');
   } else if (normalizedInput === 'ping') {
