@@ -224,7 +224,7 @@ function updateCommandDisplay(text) {
   
   if (lastLine) {
     // Update the existing last line instead of creating a new one
-    lastLine.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${text}</span><span class="cursor" aria-hidden="true"></span>`;
+    lastLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${text}</span><span class="cursor" aria-hidden="true"></span>`;
   }
 }
 
@@ -237,11 +237,11 @@ function handleCommand(input) {
   const activePrompt = terminalBody.querySelector('.line:last-child');
   if (activePrompt && activePrompt.querySelector('.cursor')) {
     activePrompt.className = 'line';
-    activePrompt.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
+    activePrompt.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
   } else {
     const commandLine = document.createElement('div');
     commandLine.className = 'line';
-    commandLine.innerHTML = `<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
+    commandLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
     terminalBody.appendChild(commandLine);
   }
 
@@ -258,7 +258,7 @@ function handleCommand(input) {
     // Add new prompt after clear
     const newPrompt = document.createElement('div');
     newPrompt.className = 'line mt-2';
-    newPrompt.innerHTML = '<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
+    newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
     terminalBody.appendChild(newPrompt);
     terminalBody.scrollTop = terminalBody.scrollHeight;
     return;
@@ -327,7 +327,7 @@ function handleCommand(input) {
   // Add new prompt
   const newPrompt = document.createElement('div');
   newPrompt.className = 'line mt-2';
-  newPrompt.innerHTML = '<span class="prompt">theodoros@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
+  newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
   terminalBody.appendChild(newPrompt);
 
   // Scroll to bottom
