@@ -155,6 +155,18 @@ body.matrixmode-active.bg-dev{
       rgba(154,255,121,0.58)
     );
   }
+
+  #skills.panel,
+  #repos.panel{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  #skills .panel-body,
+  #repos .panel-body{
+    flex: 1;
+  }
 }
 
 .tag{
@@ -261,4 +273,30 @@ body.matrixmode-active.bg-dev{
   .back-to-top{
     transition: none;
   }
+}
+
+/* New styles for enhanced portfolio */
+.text-accent {
+  color: var(--accent);
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 20px;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  background: var(--accent);
+  border-radius: 50%;
+}
+
+.blog-card:hover {
+  background-color: var(--panel);
+  border-color: var(--accent) !important;
 }
