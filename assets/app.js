@@ -24,7 +24,7 @@ const commands = {
   github: {
     description: 'Visit my GitHub profile',
     execute: () => {
-      window.open('https://github.com/theodoros-mangas', '_blank');
+      window.open('https://github.com/teo-mgs', '_blank');
       return 'Opening GitHub...';
     }
   },
