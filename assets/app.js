@@ -76,6 +76,21 @@ const commands = {
       return null;
     }
   },
+  python: {
+    description: 'My language of choice',
+    execute: () => {
+      return [
+        '<span class="text-success">Python 3.13</span>',
+        '<span class="hint">&gt;&gt;&gt;</span> from pysuperphysics import Antigravity',
+        '<span class="hint">&gt;&gt;&gt;</span> class Antigravity:',
+        '<span class="hint">...</span>&nbsp;&nbsp;&nbsp;&nbsp;def __init__(self):',
+        '<span class="hint">...</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;self.grounded = False',
+        '<span class="hint">...</span>',
+        '<span class="hint">&gt;&gt;&gt;</span> me = Antigravity()',
+        '<span class="hint">&gt;&gt;&gt;</span> print("Get ready to fly")',
+      ].join('<br>');
+    }
+  },
   matrixmode: {
     description: '',
     execute: () => {
