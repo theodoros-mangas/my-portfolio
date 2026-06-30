@@ -61,7 +61,7 @@ const commands = {
     execute: () => {
       let helpText = '<span class="hint">Available commands:</span><div class="mt-2">';
       Object.entries(commands)
-        .filter(([cmd]) => cmd !== 'matrixmode')
+        .filter(([cmd]) => cmd !== 'matrixmode' && cmd !== 'python')
         .forEach(([cmd, obj]) => {
           helpText += `<div><span class="text-success">${cmd}</span> — ${obj.description}</div>`;
         });
@@ -88,7 +88,6 @@ const commands = {
         '<span class="hint">...</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;print("Time to fly")',
         '<span class="hint">...</span>',
         '<span class="hint">&gt;&gt;&gt;</span> me = Me()',
-        'Time to fly',
       ].join('<br>');
     }
   },
