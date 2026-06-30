@@ -1,4 +1,3 @@
-// CLI Handler
 const terminalBody = document.getElementById('terminalBody');
 const MATRIX_MODE_CLASS = 'matrixmode-active';
 
@@ -72,7 +71,6 @@ const commands = {
   clear: {
     description: 'Clear terminal',
     execute: () => {
-      // Signal handled by handleCommand: do not modify DOM here
       return null;
     }
   },
@@ -102,13 +100,10 @@ const commands = {
   }
 };
 
-// Command history for bash console
 let commandHistory = [];
 let historyIndex = -1;
 
-// Initialize terminal input
 function initializeTerminal() {
-  // Mobile detection (simple):
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
 
   const terminalInput = document.createElement('input');
@@ -123,7 +118,6 @@ function initializeTerminal() {
   terminalInput.setAttribute('spellcheck', 'false');
   terminalInput.setAttribute('maxlength', '256');
 
-  // Style the input to be functional and capture input
   terminalInput.style.position = 'fixed';
   terminalInput.style.left = '-9999px';
   terminalInput.style.top = '-9999px';
@@ -132,21 +126,17 @@ function initializeTerminal() {
 
   document.body.appendChild(terminalInput);
 
-  // Focus on terminal body click - prevent scroll
   terminalBody.addEventListener('click', (e) => {
-    // Only focus on user tap/click, never programmatically on load/blur
     e.preventDefault();
     const scrollPos = terminalBody.scrollTop;
     terminalInput.focus({ preventScroll: true });
     terminalBody.scrollTop = scrollPos;
   });
 
-  // Show typed text in real-time
   terminalInput.addEventListener('input', (e) => {
     updateCommandDisplay(terminalInput.value);
   });
 
-  // Handle command input
   terminalInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       const input = terminalInput.value.trim().toLowerCase();
@@ -156,7 +146,6 @@ function initializeTerminal() {
       if (input) {
         addCommandToHistory(input);
         handleCommand(input);
-        // Re-focus after command (desktop only)
         if (!isMobile) {
           setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
         }
@@ -164,7 +153,6 @@ function initializeTerminal() {
     }
   });
 
-  // Handle up/down arrow for command history
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') {
       if (commandHistory.length > 0) {
@@ -198,20 +186,15 @@ function initializeTerminal() {
     }
   });
 
-  // Do NOT keep focus on terminal on blur (removes scroll jump on mobile)
-  // Only auto-focus on load for desktop
   if (!isMobile) {
     setTimeout(() => {
       terminalInput.focus({ preventScroll: true });
     }, 100);
-    // Keep focus on blur for desktop
     terminalInput.addEventListener('blur', () => {
       setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
     });
   }
 
-  // Keep startup aligned with normal CLI behavior:
-  // show the active prompt position reliably on first load and restore.
   const scrollToLatestPrompt = () => {
     terminalBody.scrollTop = terminalBody.scrollHeight;
   };
@@ -238,17 +221,14 @@ function updateCommandDisplay(text) {
   let lastLine = terminalBody.querySelector('.line:last-child');
 
   if (lastLine) {
-    // Update the existing last line instead of creating a new one
     lastLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${text}</span><span class="cursor" aria-hidden="true"></span>`;
   }
 }
 
 function clearCommandDisplay() {
-  // DisplayLine cleanup handled by keypress handler
 }
 
 function handleCommand(input) {
-  // Reuse the active prompt line when available to avoid duplicate command rows
   const activePrompt = terminalBody.querySelector('.line:last-child');
   if (activePrompt && activePrompt.querySelector('.cursor')) {
     activePrompt.className = 'line';
@@ -261,16 +241,13 @@ function handleCommand(input) {
   }
 
 
-  // Process command
   const [cmd, ...args] = input.split(' ');
   const normalizedInput = input.trim().toLowerCase();
 
-  // --- Silent/fun commands ---
   if (normalizedInput === 'hello world' || normalizedInput === 'hello world!') {
     addOutput('print("Hello world!")');
   } else if (normalizedInput === 'cls') {
     terminalBody.innerHTML = '';
-    // Add new prompt after clear
     const newPrompt = document.createElement('div');
     newPrompt.className = 'line mt-2';
     newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
@@ -315,39 +292,32 @@ function handleCommand(input) {
   } else if (normalizedInput === '42') {
     addOutput('The answer to life, the universe, and everything.');
   } else if (normalizedInput === 'ping') {
-    // Add date and time in front of Pong!
     const now = new Date();
     const pad = n => n.toString().padStart(2, '0');
     const time = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
     const date = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
     addOutput(`[${time} - ${date}] Pong!`);
   } else if (cmd === '/help' || cmd === 'help') {
-    // Help command
     const output = commands.help.execute();
     addOutput(output);
   } else if (commands[cmd]) {
-    // Known command
     const result = commands[cmd].execute();
     if (result !== null) {
       addOutput(result);
     }
   } else {
-    // Unknown command
     addOutput(`<span class="error">Command not found: ${cmd}</span><br><span class="hint">Type</span> <span class="text-success">help</span> <span class="hint">to see available commands</span>`);
   }
 
-  // If command was `clear`, clear the terminal body now (so the previous command line is removed)
   if (cmd === 'clear') {
     terminalBody.innerHTML = '';
   }
 
-  // Add new prompt
   const newPrompt = document.createElement('div');
   newPrompt.className = 'line mt-2';
   newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
   terminalBody.appendChild(newPrompt);
 
-  // Scroll to bottom
   terminalBody.scrollTop = terminalBody.scrollHeight;
 }
 
@@ -394,7 +364,6 @@ function initializeBackToTop() {
   toggleButtonVisibility();
 }
 
-// Handle chip clicks (existing functionality)
 document.addEventListener('DOMContentLoaded', () => {
   initializeTerminal();
   initializeBackToTop();
