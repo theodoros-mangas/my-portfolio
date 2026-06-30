@@ -60,7 +60,7 @@ const commands = {
     execute: () => {
       let helpText = '<span class="hint">Available commands:</span><div class="mt-2">';
       Object.entries(commands)
-        .filter(([cmd]) => cmd !== 'matrixmode' && cmd !== 'python')
+        .filter(([, obj]) => !obj.hidden)
         .forEach(([cmd, obj]) => {
           helpText += `<div><span class="text-success">${cmd}</span> — ${obj.description}</div>`;
         });
@@ -76,6 +76,7 @@ const commands = {
   },
   python: {
     description: 'My language of choice',
+    hidden: true,
     execute: () => {
       return [
         '<span class="text-success">Python 3.13</span>',
@@ -91,6 +92,7 @@ const commands = {
   },
   matrixmode: {
     description: '',
+    hidden: true,
     execute: () => {
       const isActive = document.body.classList.toggle(MATRIX_MODE_CLASS);
       return isActive
@@ -102,6 +104,18 @@ const commands = {
 
 let commandHistory = [];
 let historyIndex = -1;
+
+const PROMPT_PREFIX = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ ';
+const promptLineHTML = (cmdText) => `${PROMPT_PREFIX}<span class="cmd">${cmdText}</span>`;
+const typingPromptHTML = (cmdText) => `${promptLineHTML(cmdText)}<span class="cursor" aria-hidden="true"></span>`;
+const emptyPromptHTML = () => `${PROMPT_PREFIX}<span class="cursor" aria-hidden="true"></span>`;
+
+function appendNewPrompt() {
+  const newPrompt = document.createElement('div');
+  newPrompt.className = 'line mt-2';
+  newPrompt.innerHTML = emptyPromptHTML();
+  terminalBody.appendChild(newPrompt);
+}
 
 function initializeTerminal() {
   const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
@@ -141,7 +155,6 @@ function initializeTerminal() {
     if (e.key === 'Enter') {
       const input = terminalInput.value.trim().toLowerCase();
       terminalInput.value = '';
-      clearCommandDisplay();
 
       if (input) {
         addCommandToHistory(input);
@@ -218,44 +231,18 @@ function addCommandToHistory(cmd) {
 }
 
 function updateCommandDisplay(text) {
-  let lastLine = terminalBody.querySelector('.line:last-child');
+  const lastLine = terminalBody.querySelector('.line:last-child');
 
   if (lastLine) {
-    lastLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${text}</span><span class="cursor" aria-hidden="true"></span>`;
+    lastLine.innerHTML = typingPromptHTML(text);
   }
 }
 
-function clearCommandDisplay() {
-}
-
-function handleCommand(input) {
-  const activePrompt = terminalBody.querySelector('.line:last-child');
-  if (activePrompt && activePrompt.querySelector('.cursor')) {
-    activePrompt.className = 'line';
-    activePrompt.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
-  } else {
-    const commandLine = document.createElement('div');
-    commandLine.className = 'line';
-    commandLine.innerHTML = `<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cmd">${input}</span>`;
-    terminalBody.appendChild(commandLine);
-  }
-
-
-  const [cmd, ...args] = input.split(' ');
-  const normalizedInput = input.trim().toLowerCase();
-
-  if (normalizedInput === 'hello world' || normalizedInput === 'hello world!') {
-    addOutput('print("Hello world!")');
-  } else if (normalizedInput === 'cls') {
-    terminalBody.innerHTML = '';
-    const newPrompt = document.createElement('div');
-    newPrompt.className = 'line mt-2';
-    newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
-    terminalBody.appendChild(newPrompt);
-    terminalBody.scrollTop = terminalBody.scrollHeight;
-    return;
-  } else if (normalizedInput === 'ls' || normalizedInput === 'ls -la' || normalizedInput === 'tree') {
-    addOutput(
+const easterEggs = [
+  { match: (i) => i === 'hello world' || i === 'hello world!', run: () => 'print("Hello world!")' },
+  {
+    match: (i) => i === 'ls' || i === 'ls -la' || i === 'tree',
+    run: () =>
       '<pre class="mb-0" style="font-size:.85em;line-height:1.4">' +
       'theodoros/portfolio\n' +
       '├── index.html\n' +
@@ -268,38 +255,62 @@ function handleCommand(input) {
       '    │   └── Theodoros_Mangas_CV.pdf\n' +
       '    └── img/\n' +
       '        └── favicon.png</pre>'
-    );
-  } else if (normalizedInput === 'sudo' || normalizedInput.startsWith('sudo ')) {
-    addOutput('Permission denied: You are not root.');
-  } else if (normalizedInput === 'rm -rf /' || normalizedInput === 'rm -rf *' || normalizedInput === 'rm -rf') {
-    addOutput('Nice try. This portfolio is read-only.');
-  } else if (normalizedInput === 'vim' || normalizedInput === 'vi') {
-    addOutput('You are now inside vim. Good luck getting out.');
-  } else if (normalizedInput === 'exit' || normalizedInput === 'logout') {
-    addOutput('Nice try. There is no escape.');
-  } else if (normalizedInput === 'quit') {
-    addOutput('No quitters here.');
-  } else if (normalizedInput === 'pwd') {
-    addOutput('/home/theodoros/portfolio');
-  } else if (normalizedInput === 'whoami') {
-    addOutput('visitor — but you\'re welcome here.');
-  } else if (normalizedInput === ':(){ :|:& };:') {
-    addOutput('Fork bomb detected. Nice try.');
-  } else if (normalizedInput === 'make coffee') {
-    addOutput('Error: No coffee machine connected to /dev/usb0.');
-  } else if (normalizedInput === 'git blame') {
-    addOutput('Blaming theodoros... (100% of commits, as expected)');
-  } else if (normalizedInput === '42') {
-    addOutput('The answer to life, the universe, and everything.');
-  } else if (normalizedInput === 'ping') {
-    const now = new Date();
-    const pad = n => n.toString().padStart(2, '0');
-    const time = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-    const date = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
-    addOutput(`[${time} - ${date}] Pong!`);
-  } else if (cmd === '/help' || cmd === 'help') {
-    const output = commands.help.execute();
-    addOutput(output);
+  },
+  { match: (i) => i === 'sudo' || i.startsWith('sudo '), run: () => 'Permission denied: You are not root.' },
+  { match: (i) => i === 'rm -rf /' || i === 'rm -rf *' || i === 'rm -rf', run: () => 'Nice try. This portfolio is read-only.' },
+  { match: (i) => i === 'vim' || i === 'vi', run: () => 'You are now inside vim. Good luck getting out.' },
+  { match: (i) => i === 'exit' || i === 'logout', run: () => 'Nice try. There is no escape.' },
+  { match: (i) => i === 'quit', run: () => 'No quitters here.' },
+  { match: (i) => i === 'pwd', run: () => '/home/theodoros/portfolio' },
+  { match: (i) => i === 'whoami', run: () => 'visitor — but you\'re welcome here.' },
+  { match: (i) => i === ':(){ :|:& };:', run: () => 'Fork bomb detected. Nice try.' },
+  { match: (i) => i === 'make coffee', run: () => 'Error: No coffee machine connected to /dev/usb0.' },
+  { match: (i) => i === 'git blame', run: () => 'Blaming theodoros... (100% of commits, as expected)' },
+  { match: (i) => i === '42', run: () => 'The answer to life, the universe, and everything.' },
+  {
+    match: (i) => i === 'ping',
+    run: () => {
+      const now = new Date();
+      const pad = (n) => n.toString().padStart(2, '0');
+      const time = `${pad(now.getHours())}:${pad(now.getMinutes())}`;
+      const date = `${pad(now.getDate())}/${pad(now.getMonth() + 1)}/${now.getFullYear()}`;
+      return `[${time} - ${date}] Pong!`;
+    }
+  }
+];
+
+function renderCommandLine(input) {
+  const activePrompt = terminalBody.querySelector('.line:last-child');
+  if (activePrompt && activePrompt.querySelector('.cursor')) {
+    activePrompt.className = 'line';
+    activePrompt.innerHTML = promptLineHTML(input);
+  } else {
+    const commandLine = document.createElement('div');
+    commandLine.className = 'line';
+    commandLine.innerHTML = promptLineHTML(input);
+    terminalBody.appendChild(commandLine);
+  }
+}
+
+function handleCommand(input) {
+  renderCommandLine(input);
+
+  const normalizedInput = input.trim().toLowerCase();
+
+  if (normalizedInput === 'cls') {
+    terminalBody.innerHTML = '';
+    appendNewPrompt();
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+    return;
+  }
+
+  let [cmd] = normalizedInput.split(' ');
+  if (cmd === '/help') cmd = 'help';
+
+  const easterEgg = easterEggs.find(({ match }) => match(normalizedInput));
+
+  if (easterEgg) {
+    addOutput(easterEgg.run());
   } else if (commands[cmd]) {
     const result = commands[cmd].execute();
     if (result !== null) {
@@ -313,11 +324,7 @@ function handleCommand(input) {
     terminalBody.innerHTML = '';
   }
 
-  const newPrompt = document.createElement('div');
-  newPrompt.className = 'line mt-2';
-  newPrompt.innerHTML = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor" aria-hidden="true"></span>';
-  terminalBody.appendChild(newPrompt);
-
+  appendNewPrompt();
   terminalBody.scrollTop = terminalBody.scrollHeight;
 }
 
