@@ -4,7 +4,7 @@ const MATRIX_MODE_CLASS = 'matrixmode-active';
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas — Software Engineer (Python/Django)'
+    execute: () => 'Theodoros Mangas — licensed surveyor turned Python/Django engineer'
   },
   projects: {
     description: 'View my projects',
@@ -23,7 +23,7 @@ const commands = {
   github: {
     description: 'Visit my GitHub profile',
     execute: () => {
-      window.open('https://github.com/teo-mgs', '_blank');
+      window.open('https://github.com/Teo-Mgs', '_blank');
       return 'Opening GitHub...';
     }
   },
@@ -118,7 +118,12 @@ function appendNewPrompt() {
 }
 
 function initializeTerminal() {
-  const isMobile = /Mobi|Android|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i.test(navigator.userAgent);
+  // Either signal alone misses cases: some touch-only browsers still report a
+  // fine pointer, and hybrid laptops report both.
+  const isTouch =
+    window.matchMedia('(hover: none), (pointer: coarse)').matches ||
+    navigator.maxTouchPoints > 0 ||
+    'ontouchstart' in window;
 
   const terminalInput = document.createElement('input');
   terminalInput.type = 'text';
@@ -131,16 +136,34 @@ function initializeTerminal() {
   terminalInput.setAttribute('autocapitalize', 'off');
   terminalInput.setAttribute('spellcheck', 'false');
   terminalInput.setAttribute('maxlength', '256');
+  // 16px avoids iOS Safari's automatic zoom-on-focus.
+  terminalInput.style.fontSize = '16px';
 
-  terminalInput.style.position = 'fixed';
-  terminalInput.style.left = '-9999px';
-  terminalInput.style.top = '-9999px';
-  terminalInput.style.opacity = '0';
-  terminalInput.style.pointerEvents = 'none';
-
-  document.body.appendChild(terminalInput);
+  if (isTouch) {
+    // An off-screen, pointer-events:none input can't be focused by a tap,
+    // which leaves the terminal unusable on a phone. Transparent, but present.
+    terminalInput.style.position = 'absolute';
+    terminalInput.style.inset = '0';
+    terminalInput.style.width = '100%';
+    terminalInput.style.height = '100%';
+    terminalInput.style.opacity = '0';
+    terminalInput.style.border = 'none';
+    terminalInput.style.background = 'transparent';
+    terminalInput.style.zIndex = '1';
+    terminalBody.style.position = 'relative';
+    terminalBody.appendChild(terminalInput);
+  } else {
+    terminalInput.style.position = 'fixed';
+    terminalInput.style.left = '-9999px';
+    terminalInput.style.top = '-9999px';
+    terminalInput.style.opacity = '0';
+    terminalInput.style.pointerEvents = 'none';
+    document.body.appendChild(terminalInput);
+  }
 
   terminalBody.addEventListener('click', (e) => {
+    // Let chips handle their own taps rather than stealing focus to the input.
+    if (e.target.closest('.chip')) return;
     e.preventDefault();
     const scrollPos = terminalBody.scrollTop;
     terminalInput.focus({ preventScroll: true });
@@ -159,9 +182,9 @@ function initializeTerminal() {
       if (input) {
         addCommandToHistory(input);
         handleCommand(input);
-        if (!isMobile) {
-          setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
-        }
+        // Refocus so consecutive commands work; on touch this also keeps the
+        // keyboard up instead of dismissing it after each Enter.
+        setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
       }
     }
   });
@@ -199,7 +222,9 @@ function initializeTerminal() {
     }
   });
 
-  if (!isMobile) {
+  // Desktop only: on touch, autofocus and the blur trap would pop the on-screen
+  // keyboard on load and refuse to let the user dismiss it.
+  if (!isTouch) {
     setTimeout(() => {
       terminalInput.focus({ preventScroll: true });
     }, 100);
@@ -254,7 +279,8 @@ const easterEggs = [
       '    ├── files/\n' +
       '    │   └── Theodoros_Mangas_CV.pdf\n' +
       '    └── img/\n' +
-      '        └── favicon.png</pre>'
+      '        ├── favicon.png\n' +
+      '        └── og-card.png</pre>'
   },
   { match: (i) => i === 'sudo' || i.startsWith('sudo '), run: () => 'Permission denied: You are not root.' },
   { match: (i) => i === 'rm -rf /' || i === 'rm -rf *' || i === 'rm -rf', run: () => 'Nice try. This portfolio is read-only.' },

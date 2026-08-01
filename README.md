@@ -1,26 +1,12 @@
 # Theodoros Mangas - Software Engineering Portfolio
 
-This repository contains my personal portfolio website: a concise, production-minded presentation of my software engineering work, technical focus, and implementation standards.
+Source for my personal portfolio site. I'm a licensed surveyor turned Python/Django engineer — I build tooling for the surveying and technical-office industry I came from.
 
 ## Focus
 
-- Full-stack web development with Python/Django foundations
-- GIS-oriented workflows and practical engineering tooling
-- Clean architecture, validation-first logic, and maintainable systems
-- Clear UI/UX with reliability and usability as defaults
-
-## What This Portfolio Highlights
-
-- Real-world projects and platform architecture decisions
-- Engineering approach across backend, frontend, and data workflows
-- Practical delivery standards: structure, consistency, and scalability
-
-## Core Principles
-
-- Clarity first: readable code, predictable behavior, and straightforward structure
-- Maintainability over complexity: reusable patterns and low duplication
-- Quality by default: accessibility, validation, and responsive design
-- Iteration readiness: easy to update, extend, and refine over time
+- Backend Python/Django: API design, data modeling, application structure
+- Geospatial pipelines (DXF/KML/KMZ/TXT/JSON) with validation-first handling
+- Practical engineering tooling for real technical-office workflows
 
 ## Tech Stack (Website)
 
@@ -42,10 +28,11 @@ Optional:
 - Main content: `index.html`
 - Styles: `assets/style.css`
 - Interactions: `assets/app.js`
+- Social preview card: `assets/img/og-card.svg` (edit, then re-export to `og-card.png` at 1200×630)
 
 ## Live Portfolio
 
-`https://theodoros-mangas.github.io/my-portfolio/`
+https://theodoros-mangas.github.io/my-portfolio/
 
 ## License
 

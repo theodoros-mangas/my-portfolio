@@ -21,6 +21,12 @@ body{
   flex-direction: column;
 }
 
+/* Nothing should push the page wider than the viewport on a phone. */
+html, body{
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 body.matrixmode-active.bg-dev{
   background:
     linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
@@ -117,9 +123,16 @@ body.matrixmode-active.bg-dev{
     flex-direction: column;
   }
 
-  #about .panel-body,
   #projects .panel-body{
     flex: 1;
+  }
+
+  /* Let about size to its content; stretching it left a large empty gap. */
+  #about .panel-body{
+    flex: 0 0 auto;
+  }
+  #about.panel{
+    height: auto;
   }
 
   #projects .panel-body{
@@ -165,7 +178,13 @@ body.matrixmode-active.bg-dev{
 
   #skills .panel-body,
   #repos .panel-body{
-    flex: 1;
+    flex: 0 0 auto;
+  }
+
+  /* Push the private-source note to the bottom instead of leaving a gap
+     between it and the repo cards. */
+  #repos > p:last-child{
+    margin-top: auto !important;
   }
 }
 
@@ -214,6 +233,10 @@ body.matrixmode-active.bg-dev{
 .hint{
   color: rgba(255,255,255,0.65);
 }
+/* Readable secondary text — Bootstrap's .text-secondary is too dim on this bg. */
+.note-muted{
+  color: rgba(255,255,255,0.60);
+}
 .text-success{
   color: var(--accent2);
 }
@@ -227,7 +250,38 @@ body.matrixmode-active.bg-dev{
   height: 320px;
   max-height: 60vh;
   overflow-y: auto;
+  overflow-x: hidden;
   cursor: text;
+  overflow-wrap: anywhere;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Long output (tree listings, help) must never widen the terminal on a phone. */
+.terminal-body pre{
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 575.98px){
+  .terminal-body{
+    height: 260px;
+    padding: 12px;
+    font-size: 0.82rem;
+  }
+  .terminal-body .chip{
+    padding: 8px 14px;
+    font-size: 0.82rem;
+  }
+
+  .hero .lead{ font-size: 1.05rem; }
+  .hero h2{ font-size: 1.75rem; }
+
+  /* Project header: title and status badge stack instead of overflowing. */
+  .project > .d-flex{
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .project .fs-4{ font-size: 1.15rem !important; }
 }
 
 .back-to-top{
@@ -276,7 +330,6 @@ body.matrixmode-active.bg-dev{
   }
 }
 
-/* New styles for enhanced portfolio */
 .text-accent {
   color: var(--accent);
 }
@@ -297,7 +350,16 @@ body.matrixmode-active.bg-dev{
   border-radius: 50%;
 }
 
-.blog-card:hover {
-  background-color: var(--panel);
-  border-color: var(--accent) !important;
+/* Marks a project whose source is private, in place of a dead GitHub link. */
+.badge-private{
+  flex: none;
+  align-self: flex-start;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.75rem;
+  color: var(--muted);
+  background: rgba(255,255,255,0.03);
+  white-space: nowrap;
 }
