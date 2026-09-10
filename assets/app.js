@@ -120,11 +120,6 @@ function appendNewPrompt() {
 }
 
 function initializeTerminal() {
-  const isTouch =
-    window.matchMedia('(hover: none), (pointer: coarse)').matches ||
-    navigator.maxTouchPoints > 0 ||
-    'ontouchstart' in window;
-
   const terminalInput = document.createElement('input');
   terminalInput.type = 'text';
   terminalInput.id = 'cliInput';
@@ -136,42 +131,36 @@ function initializeTerminal() {
   terminalInput.setAttribute('autocapitalize', 'off');
   terminalInput.setAttribute('spellcheck', 'false');
   terminalInput.setAttribute('maxlength', '256');
+  terminalInput.setAttribute('enterkeyhint', 'go');
+  terminalInput.setAttribute('inputmode', 'text');
   terminalInput.style.fontSize = '16px';
 
-  if (isTouch) {
-    terminalInput.style.position = 'absolute';
-    terminalInput.style.inset = '0';
-    terminalInput.style.width = '100%';
-    terminalInput.style.height = '100%';
-    terminalInput.style.opacity = '0';
-    terminalInput.style.border = 'none';
-    terminalInput.style.background = 'transparent';
-    terminalInput.style.zIndex = '1';
-    terminalBody.style.position = 'relative';
-    terminalBody.appendChild(terminalInput);
-  } else {
-    terminalInput.style.position = 'fixed';
-    terminalInput.style.left = '-9999px';
-    terminalInput.style.top = '-9999px';
-    terminalInput.style.opacity = '0';
-    terminalInput.style.pointerEvents = 'none';
-    document.body.appendChild(terminalInput);
-  }
+  terminalInput.style.position = 'absolute';
+  terminalInput.style.opacity = '0';
+  terminalInput.style.width = '1px';
+  terminalInput.style.height = '1px';
+  terminalInput.style.padding = '0';
+  terminalInput.style.border = 'none';
+  terminalInput.style.background = 'transparent';
+  terminalInput.style.left = '0';
+  terminalInput.style.bottom = '0';
+  terminalBody.style.position = 'relative';
+  terminalBody.appendChild(terminalInput);
 
   terminalBody.addEventListener('click', (e) => {
     if (e.target.closest('.chip')) return;
-    e.preventDefault();
     const scrollPos = terminalBody.scrollTop;
     terminalInput.focus({ preventScroll: true });
     terminalBody.scrollTop = scrollPos;
   });
 
-  terminalInput.addEventListener('input', (e) => {
+  terminalInput.addEventListener('input', () => {
     updateCommandDisplay(terminalInput.value);
   });
 
-  terminalInput.addEventListener('keypress', (e) => {
+  terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault();
       const input = terminalInput.value.trim().toLowerCase();
       terminalInput.value = '';
 
@@ -180,10 +169,9 @@ function initializeTerminal() {
         handleCommand(input);
         setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
       }
+      return;
     }
-  });
 
-  terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'ArrowUp') {
       if (commandHistory.length > 0) {
         if (historyIndex === -1) {
@@ -228,11 +216,16 @@ function addCommandToHistory(cmd) {
   historyIndex = -1;
 }
 
-function updateCommandDisplay(text) {
-  const lastLine = terminalBody.querySelector('.line:last-child');
+function lastLine() {
+  const lines = terminalBody.querySelectorAll('.line');
+  return lines.length ? lines[lines.length - 1] : null;
+}
 
-  if (lastLine) {
-    lastLine.innerHTML = typingPromptHTML(text);
+function updateCommandDisplay(text) {
+  const line = lastLine();
+
+  if (line) {
+    line.innerHTML = typingPromptHTML(text);
   }
 }
 
@@ -280,7 +273,7 @@ const easterEggs = [
 ];
 
 function renderCommandLine(input) {
-  const activePrompt = terminalBody.querySelector('.line:last-child');
+  const activePrompt = lastLine();
   if (activePrompt && activePrompt.querySelector('.cursor')) {
     activePrompt.className = 'line';
     activePrompt.innerHTML = promptLineHTML(input);
