@@ -29,6 +29,7 @@ Optional:
 - Main content: `index.html`
 - Styles: `assets/style.css`
 - Interactions: `assets/app.js`
+- Project screenshots: `assets/img/screenshots/` (WebP, 1600px wide)
 - Social preview card: `assets/img/og-card.svg` (edit, then re-export to `og-card.png` at 1200×630)
 
 ## Live Portfolio

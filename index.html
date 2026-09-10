@@ -99,374 +99,520 @@
 <!-- secret command hint: try typing matrixmode -->
 
 <body class="bg-dev text-light">
-  <header class="container py-4">
-    <div class="d-flex justify-content-between align-items-center">
-      <div class="brand">
-        <span class="dot dot-green"></span>
-        <span class="dot dot-yellow"></span>
-        <span class="dot dot-red"></span>
-        <span class="ms-2 fw-semibold">teo@portfolio</span>
-      </div>
-      <div class="d-none d-md-flex flex-wrap gap-2">
-        <a class="btn btn-dev" href="#projects">Projects</a>
-        <a class="btn btn-dev" href="#skills">Skills</a>
-        <a class="btn btn-dev" href="#experience">Experience</a>
-        <a class="btn btn-dev" href="#contact">Contact</a>
-        <a class="btn btn-dev-primary" href="assets/files/Theodoros_Mangas_CV.pdf" target="_blank" rel="noopener">CV</a>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <div class="container py-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="brand">
+          <span class="dot dot-green"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-red"></span>
+          <span class="ms-2 fw-semibold">teo@portfolio</span>
+        </div>
+        <div class="header-nav">
+          <nav class="nav-links" aria-label="Primary">
+            <a class="btn btn-sm btn-dev" href="#projects">Projects</a>
+            <a class="btn btn-sm btn-dev" href="#skills">Skills</a>
+            <a class="btn btn-sm btn-dev" href="#experience">Experience</a>
+            <a class="btn btn-sm btn-dev" href="#contact">Contact</a>
+          </nav>
+          
+          <a class="btn btn-sm btn-solid nav-cv" href="assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+            rel="noopener">CV</a>
+        </div>
       </div>
     </div>
   </header>
-  <main class="container pb-5">
-    <section class="hero mb-2">
-      <div class="text-center py-2">
-        <h2 class="fw-bold mb-3">Theodoros Mangas</h2>
-        <p class="lead mb-3">Python/Django engineer who ships full-stack platforms for real clients - from
+
+  <main class="container pb-5" id="main">
+    <section class="hero mb-4">
+      <div class="text-center py-4">
+        <h1 class="fw-bold mb-3">Theodoros Mangas</h1>
+        <p class="lead mb-3">Software engineer (Python/Django) who ships full-stack platforms for real clients - from
           custom-CMS websites to geospatial data pipelines.</p>
         <p class="mb-4">A decade as a licensed surveyor before that: I design for how field data actually breaks —
           validation-first, fail loud, never silently wrong.</p>
-      </div>
-    </section>
-    <section class="terminal shadow-lg mb-4">
-      <div class="terminal-bar">
-        <span class="me-2">bash</span>
-        <span class="text-secondary">~/teo/portfolio</span>
-      </div>
-      <div class="terminal-body" id="terminalBody" aria-live="polite">
-        <div class="line output" id="typedLine"></div>
-        <div class="line output">
-          <span class="hint">Available commands:</span>
-          <div class="mt-2 d-flex flex-wrap gap-2">
-            <button class="chip" data-cmd="projects">projects</button>
-            <button class="chip" data-cmd="cv">cv</button>
-            <button class="chip" data-cmd="github">github</button>
-            <button class="chip" data-cmd="linkedin">linkedin</button>
-            <button class="chip" data-cmd="email">email</button>
-            <button class="chip" data-cmd="about">about</button>
-            <button class="chip" data-cmd="contact">contact</button>
-            <button class="chip" data-cmd="help">help</button>
-          </div>
-        </div>
-        <div class="line mt-3">
-          <span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="text-secondary">try typing
-            a command or click the chips above...</span>
-        </div>
-        <div class="line mt-2">
-          <span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor"
-            aria-hidden="true"></span>
+        <div class="d-flex flex-wrap gap-2 justify-content-center">
+          <a class="btn btn-solid" href="assets/files/Theodoros_Mangas_CV.pdf" target="_blank" rel="noopener">Download
+            CV</a>
+          <a class="btn btn-cta" href="#projects">View projects</a>
+          <a class="btn btn-dev" href="mailto:magg_theod@live.com">Get in touch</a>
         </div>
       </div>
     </section>
-    <section class="row g-4">
-      <div class="col-12 col-lg-6">
-        <div class="panel" id="about">
-          <div class="panel-title">about-me/</div>
-          <div class="panel-body">
-            <p class="mb-2">
-              <span class="tag">Python</span>
-              <span class="tag">Django</span>
-              <span class="tag">REST APIs</span>
-              <span class="tag">PostgreSQL</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">Docker</span>
-            </p>
-            <p class="mb-2">
-              Backend Python/Django is my core - API design, data modeling, and application structure. I build
-              full-stack platforms for real clients: custom CMS-driven sites and geospatial pipelines
-              (DXF/KML/KMZ/TXT/JSON), where bad input is the norm and predictable output is the whole job, so I
-              design validation first and fail loudly rather than silently.
-            </p>
-            <p class="mb-2">
-              Before software, I spent a decade as a licensed surveying and geoinformatics engineer. That background
-              is why I build this way: I used to do these workflows by hand, so I know exactly where the data goes
-              wrong and what the field actually needs.
-            </p>
-            <p class="mb-0">
-              I care most about systems that stay maintainable after launch: reusable patterns over one-off code, and
-              interfaces that make user error hard.
-            </p>
+
+    <section class="stats-strip" aria-label="At a glance">
+      <div class="stat">
+        <span class="stat-value">4</span>
+        <span class="stat-label">platforms shipped<br>end-to-end</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">2</span>
+        <span class="stat-label">live sites in<br>daily client use</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">5+</span>
+        <span class="stat-label">years building<br>with Python/Django</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">10+</span>
+        <span class="stat-label">years in surveying<br>&amp; geospatial data</span>
+      </div>
+    </section>
+
+    <section class="mb-4">
+      <button class="terminal-toggle" type="button" id="terminalToggle" aria-expanded="false"
+        aria-controls="terminalWrap">
+        <span><span class="text-accent">$</span> interactive shell — poke around if you like</span>
+        <span class="chevron" aria-hidden="true">▾</span>
+      </button>
+      <div id="terminalWrap" hidden>
+        <div class="terminal shadow-lg">
+          <div class="terminal-bar">
+            <span class="me-2">bash</span>
+            <span class="note-muted">~/teo/portfolio</span>
+          </div>
+          <div class="terminal-body" id="terminalBody" aria-live="polite">
+            <div class="line output" id="typedLine"></div>
+            <div class="line output">
+              <span class="hint">Available commands:</span>
+              <div class="mt-2 d-flex flex-wrap gap-2">
+                <button class="chip" data-cmd="projects">projects</button>
+                <button class="chip" data-cmd="cv">cv</button>
+                <button class="chip" data-cmd="github">github</button>
+                <button class="chip" data-cmd="linkedin">linkedin</button>
+                <button class="chip" data-cmd="email">email</button>
+                <button class="chip" data-cmd="about">about</button>
+                <button class="chip" data-cmd="contact">contact</button>
+                <button class="chip" data-cmd="help">help</button>
+              </div>
+            </div>
+            <div class="line mt-3">
+              <span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="note-muted">try typing
+                a command or click the chips above...</span>
+            </div>
+            <div class="line mt-2">
+              <span class="prompt">teo@dev</span>:<span class="path">~</span>$ <span class="cursor"
+                aria-hidden="true"></span>
+            </div>
           </div>
         </div>
       </div>
-      <div class="col-12 col-lg-6">
-        <div class="panel" id="projects">
-          <div class="panel-title">projects/</div>
-          <div class="panel-body">
-            <div class="project">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold fs-4">Engineering Services - Technical Office</div>
-                  <div class="small">My own product - built and run end-to-end</div>
+    </section>
+
+    <section class="mb-4" id="projects">
+      <div class="panel">
+        <div class="panel-title">projects/</div>
+        <div class="panel-body">
+          <div class="projects-grid">
+
+            <article class="project-card" data-gallery>
+              <div class="shot-frame">
+                <img src="assets/img/screenshots/iasmos_museum_01.webp"
+                    alt="Iasmos museum public homepage: bilingual navigation with a photo carousel of the museum building and a news panel"
+                    class="is-active" width="1600" height="900" decoding="async"
+                    data-caption="Public site — bilingual (EL/EN) with staff-managed carousel and announcements">
+                <img src="assets/img/screenshots/iasmos_museum_02.webp"
+                    alt="Custom CMS control panel listing carousel slides with published status, edit and delete actions, and a sidebar of manageable content types"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Custom CMS — staff manage exhibits, events, pages and media themselves">
+              </div>
+              <div class="shot-thumbs" role="tablist" aria-label="Iasmos museum screenshots">
+                <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
+                  aria-label="Public homepage">
+                  <img src="assets/img/screenshots/iasmos_museum_01.webp" alt="" width="160" height="90" decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false"
+                  aria-label="CMS control panel">
+                  <img src="assets/img/screenshots/iasmos_museum_02.webp" alt="" width="160" height="90" decoding="async">
+                </button>
+              </div>
+              <p class="shot-caption" data-caption-target>Public site — bilingual (EL/EN) with staff-managed carousel
+                and announcements</p>
+              <div class="card-body">
+                <div class="card-head">
+                  <div>
+                    <div class="project-title">Iasmos Culture Club Museum</div>
+                    <div class="project-kicker">Client project — bilingual museum platform</div>
+                  </div>
+                  <span class="status-pill status-live">live</span>
                 </div>
-                <a href="https://www.agropixida-syn2.gr" class="btn btn-sm btn-dev" target="_blank" rel="noopener">Live
-                  Site</a>
-              </div>
-              <div class="small mt-2">
-                Full-stack Django platform I built and operate for my own technical-office practice, combining
-                dynamic service pages, project showcases, multilingual content (Greek/English), team profiles, and
-                secure customer management.
-              </div>
-              <div class="tech-stack mt-2">
-                <span class="tag">Python</span>
-                <span class="tag">Django</span>
-                <span class="tag">MySQL</span>
-                <span class="tag">Bootstrap</span>
-                <span class="tag">AJAX</span>
-                <span class="tag">GIS</span>
-                <span class="tag">modeltranslation</span>
-              </div>
-              <div class="outcomes mt-2 small">
-                <strong>Key Features:</strong> Multilingual CMS, integrated GIS tools, QR code generation, secure client
-                portals.<br>
-                <strong>Status:</strong> Live and in daily use, with a public toolbox of 10+ engineering utilities.
-              </div>
-            </div>
-            <div class="project mt-3">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold fs-4">HandyTools</div>
-                  <div class="small">Modular toolbox SaaS platform (active build)</div>
+                <p class="project-desc">Full-stack Django site built for a museum client in place of an off-the-shelf
+                  CMS, so every part of the site — exhibits, events, pages, team, media — is editable by their own
+                  staff through a purpose-built moderator dashboard with role-based access and soft-delete recovery.
+                </p>
+                <div class="project-meta">
+                  <strong>Highlights:</strong> Custom CMS with full CRUD over exhibits and events (RSVP booking +
+                  calendar export); bilingual EL/EN throughout; brute-force login protection; cookie-free
+                  first-party analytics.<br>
+                  <strong>Status:</strong> Built solo over ~3 months, delivered September 2026. In daily use by the
+                  museum team; I maintain it on an ongoing basis.
                 </div>
-                <span class="badge-private" title="Source not public">private</span>
-              </div>
-              <div class="small mt-2">
-                Modular platform architecture with reusable components, shared UI components, and
-                standardized patterns for converters, utilities, and geospatial helpers.
-              </div>
-              <div class="tech-stack mt-2">
-                <span class="tag">Python</span>
-                <span class="tag">Django</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">PostGIS</span>
-                <span class="tag">GeoDjango</span>
-                <span class="tag">Django REST Framework</span>
-                <span class="tag">Redis</span>
-                <span class="tag">Celery</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">Leaflet</span>
-                <span class="tag">Bootstrap</span>
-                <span class="tag">Docker</span>
-                <span class="tag">Nginx</span>
-                <span class="tag">Gunicorn</span>
-              </div>
-              <div class="outcomes mt-2 small">
-                <strong>Key Features:</strong> Modular architecture, validation-first workflows, consistent UX
-                patterns.<br>
-                <strong>Architecture:</strong> A shared component layer with standardized patterns, so each new tool
-                reuses the existing converters, validation, and UI instead of rebuilding them. Currently supports 5+
-                engineering utilities.
-              </div>
-            </div>
-            <div class="project mt-3">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold fs-4">CityCare</div>
-                  <div class="small">Volunteer operations & live city map platform (deployment-ready)</div>
+                <div class="tech-stack">
+                  <span class="tag">Python</span>
+                  <span class="tag">Django</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">django-modeltranslation</span>
+                  <span class="tag">django-axes</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">Nginx</span>
+                  <span class="tag">Gunicorn</span>
                 </div>
-                <span class="badge-private" title="Source not public">private</span>
-              </div>
-              <div class="small mt-2">
-                A web application that allows volunteer teams to record and manage real-world actions directly on a live
-                city map (incidents, maintenance, field tasks, observations).
-                It provides role-based workflows, location-linked records, and a clear operational overview so multiple
-                users can coordinate activity in the same geographic space without confusion.
-              </div>
-              <div class="tech-stack mt-2">
-                <span class="tag">Python</span>
-                <span class="tag">Django</span>
-                <span class="tag">Leaflet</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">PostGIS</span>
-                <span class="tag">Bootstrap</span>
-              </div>
-              <div class="outcomes mt-2 small">
-                <strong>Key Features:</strong> Real-time map interactions, role-based access, audit trails,
-                mobile-responsive design.<br>
-                <strong>Status:</strong> Built and deployment-ready; not yet running with live users. Designed so
-                multiple volunteer teams can work the same map without duplicating or overwriting each other's records.
-              </div>
-            </div>
-            <div class="project mt-3">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <div class="fw-semibold fs-4">Iasmos Culture Club Museum</div>
-                  <div class="small">Bilingual museum platform with a custom-built CMS (client project)</div>
+                <div class="project-actions">
+                  <a href="https://www.museum-iasmos-cultureclub.gr/en/" class="btn btn-sm btn-cta" target="_blank"
+                    rel="noopener">Visit live site →</a>
                 </div>
-                <a href="https://www.museum-iasmos-cultureclub.gr/en/" class="btn btn-sm btn-dev" target="_blank"
-                  rel="noopener">Live Site</a>
               </div>
-              <div class="small mt-2">
-                Full-stack Django site built for a museum client in place of an off-the-shelf CMS, so every part of
-                the site - exhibits, events, pages, team, media - is editable by their own staff through a
-                purpose-built moderator dashboard with role-based access and soft-delete recovery.
+            </article>
+
+            <article class="project-card" data-gallery>
+              <div class="shot-frame">
+                <img src="assets/img/screenshots/Engineering_services_01.webp"
+                    alt="Engineer Tools page showing a searchable grid of utilities including a JSON-to-DXF converter and a vector file map viewer"
+                    class="is-active" width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Public toolbox — searchable engineering utilities, free to use">
+                <img src="assets/img/screenshots/Engineering_services_02.webp"
+                    alt="Software development service page with a dark hero and bullet points covering MVC architecture and ORM database interaction"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Service pages — dynamic content with light/dark theming and EL/EN switching">
               </div>
-              <div class="tech-stack mt-2">
-                <span class="tag">Python</span>
-                <span class="tag">Django</span>
-                <span class="tag">PostgreSQL</span>
-                <span class="tag">django-modeltranslation</span>
-                <span class="tag">django-axes</span>
-                <span class="tag">Docker</span>
-                <span class="tag">Nginx</span>
-                <span class="tag">Gunicorn</span>
-                <span class="tag">Bootstrap</span>
-                <span class="tag">JavaScript</span>
+              <div class="shot-thumbs" role="tablist" aria-label="Engineering services screenshots">
+                <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
+                  aria-label="Engineer tools page">
+                  <img src="assets/img/screenshots/Engineering_services_01.webp" alt="" width="160" height="90" decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false"
+                  aria-label="Service page">
+                  <img src="assets/img/screenshots/Engineering_services_02.webp" alt="" width="160" height="90" decoding="async">
+                </button>
               </div>
-              <div class="outcomes mt-2 small">
-                <strong>Key Features:</strong> Custom CMS with full CRUD over exhibits, events (with RSVP booking and
-                calendar export), pages, and team profiles; bilingual English/Greek content throughout; brute-force
-                login protection; cookie-free first-party analytics.<br>
-                <strong>Status:</strong> Live and in daily use by the museum's own team; built over ~3 months and
-                delivered September 2026. I maintain it on an ongoing basis.
+              <p class="shot-caption" data-caption-target>Public toolbox — searchable engineering utilities, free to
+                use</p>
+              <div class="card-body">
+                <div class="card-head">
+                  <div>
+                    <div class="project-title">Engineering Services — Technical Office</div>
+                    <div class="project-kicker">My own product — built and run end-to-end</div>
+                  </div>
+                  <span class="status-pill status-live">live</span>
+                </div>
+                <p class="project-desc">Full-stack Django platform I built and operate for my own technical-office
+                  practice, combining dynamic service pages, project showcases, multilingual content (Greek/English),
+                  team profiles, and secure customer management.</p>
+                <div class="project-meta">
+                  <strong>Highlights:</strong> Multilingual CMS, integrated GIS tools, QR code generation, secure
+                  client portals.<br>
+                  <strong>Status:</strong> Live and in daily use, with a public toolbox of 10+ engineering
+                  utilities.
+                </div>
+                <div class="tech-stack">
+                  <span class="tag">Python</span>
+                  <span class="tag">Django</span>
+                  <span class="tag">MySQL</span>
+                  <span class="tag">Bootstrap</span>
+                  <span class="tag">AJAX</span>
+                  <span class="tag">GIS</span>
+                  <span class="tag">modeltranslation</span>
+                </div>
+                <div class="project-actions">
+                  <a href="https://www.agropixida-syn2.gr" class="btn btn-sm btn-cta" target="_blank"
+                    rel="noopener">Visit live site →</a>
+                </div>
               </div>
-            </div>
+            </article>
+
+            <article class="project-card" data-gallery>
+              <div class="shot-frame">
+                <img src="assets/img/screenshots/Handytools_03.webp"
+                    alt="HandyTools tool library: a filterable grid of tool cards including Surveyor Toolkit, PDF multi-tool, unit converter and image utilities"
+                    class="is-active" width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Tool library — category filters and live search across the modular toolbox">
+                <img src="assets/img/screenshots/Handytools_04.webp"
+                    alt="Surveyor Toolkit map workspace with a layers sidebar, drawing and measurement toolbar, and an onboarding dialog explaining GeoJSON, KML, KMZ and DXF import"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Surveyor Toolkit — import DXF/KML/KMZ/GeoJSON, measure, and convert coordinates">
+                <img src="assets/img/screenshots/Handytools_02.webp"
+                    alt="HandyTools landing page headline about licensing, priority queueing and API access, beside a system status panel showing API, queue and database online"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Landing — licensing tiers, priority queueing, and live system status">
+              </div>
+              <div class="shot-thumbs" role="tablist" aria-label="HandyTools screenshots">
+                <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
+                  aria-label="Tool library">
+                  <img src="assets/img/screenshots/Handytools_03.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false"
+                  aria-label="Surveyor toolkit map">
+                  <img src="assets/img/screenshots/Handytools_04.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false" aria-label="Landing page">
+                  <img src="assets/img/screenshots/Handytools_02.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+              </div>
+              <p class="shot-caption" data-caption-target>Tool library — category filters and live search across the
+                modular toolbox</p>
+              <div class="card-body">
+                <div class="card-head">
+                  <div>
+                    <div class="project-title">HandyTools</div>
+                    <div class="project-kicker">Modular toolbox SaaS platform</div>
+                  </div>
+                  <span class="status-pill status-build">in build</span>
+                </div>
+                <p class="project-desc">Modular platform architecture with reusable components, shared UI components,
+                  and standardized patterns for converters, utilities, and geospatial helpers.</p>
+                <div class="project-meta">
+                  <strong>Architecture:</strong> A shared component layer with standardized patterns, so each new
+                  tool reuses the existing converters, validation, and UI instead of rebuilding them. Currently
+                  supports 5+ engineering utilities.<br>
+                  <strong>Status:</strong> Active build — licensing, queueing and API access in place. Source is
+                  private.
+                </div>
+                <div class="tech-stack">
+                  <span class="tag">Python</span>
+                  <span class="tag">Django</span>
+                  <span class="tag">PostGIS</span>
+                  <span class="tag">GeoDjango</span>
+                  <span class="tag">DRF</span>
+                  <span class="tag">Redis</span>
+                  <span class="tag">Celery</span>
+                  <span class="tag">Leaflet</span>
+                  <span class="tag">Docker</span>
+                  <span class="tag">Nginx</span>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-gallery>
+              <div class="shot-frame">
+                <img src="assets/img/screenshots/CityCare_02.webp"
+                    alt="CityCare actions-by-location view: a searchable list of 11 city locations beside a Leaflet map with pins and a panel of logged volunteer watering actions"
+                    class="is-active" width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Live city map — volunteer actions logged against real locations">
+                <img src="assets/img/screenshots/CityCare_03.webp"
+                    alt="CityCare admin panel managing action types, with a sidebar for volunteer applications, locations, teams, users and team actions"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Admin panel — action types, teams, locations and volunteer applications">
+                <img src="assets/img/screenshots/CityCare_01.webp"
+                    alt="CityCare landing page with illustrated cards for the Cleaning, Watering and Caring volunteer workflows"
+                    width="1600" height="900" loading="lazy" decoding="async"
+                    data-caption="Landing — each volunteer workflow gets its own card and map view">
+              </div>
+              <div class="shot-thumbs" role="tablist" aria-label="CityCare screenshots">
+                <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
+                  aria-label="Live city map">
+                  <img src="assets/img/screenshots/CityCare_02.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false" aria-label="Admin panel">
+                  <img src="assets/img/screenshots/CityCare_03.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false" aria-label="Landing page">
+                  <img src="assets/img/screenshots/CityCare_01.webp" alt="" width="160" height="90"
+                    decoding="async">
+                </button>
+              </div>
+              <p class="shot-caption" data-caption-target>Live city map — volunteer actions logged against real
+                locations</p>
+              <div class="card-body">
+                <div class="card-head">
+                  <div>
+                    <div class="project-title">CityCare</div>
+                    <div class="project-kicker">Volunteer operations &amp; live city map</div>
+                  </div>
+                  <span class="status-pill status-build">deploy-ready</span>
+                </div>
+                <p class="project-desc">A web application that lets volunteer teams record and manage real-world
+                  actions directly on a live city map — incidents, maintenance, field tasks, observations — with
+                  role-based workflows and location-linked records.</p>
+                <div class="project-meta">
+                  <strong>Highlights:</strong> Real-time map interactions, role-based access, audit trails,
+                  mobile-responsive design.<br>
+                  <strong>Status:</strong> Built and deployment-ready; not yet running with live users. Designed so
+                  multiple teams can work the same map without duplicating or overwriting each other's records.
+                </div>
+                <div class="tech-stack">
+                  <span class="tag">Python</span>
+                  <span class="tag">Django</span>
+                  <span class="tag">Leaflet</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">PostGIS</span>
+                  <span class="tag">Bootstrap</span>
+                </div>
+              </div>
+            </article>
 
           </div>
         </div>
       </div>
     </section>
-    <section class="row g-4 mt-4">
-      <div class="col-12">
-        <div class="panel" id="skills">
-          <div class="panel-title">skills/</div>
-          <div class="panel-body">
-            <div class="skill-category mb-3">
-              <h6 class="text-accent">Backend & APIs</h6>
+
+    <section class="mb-4">
+      <div class="panel" id="about">
+        <div class="panel-title">about-me/</div>
+        <div class="panel-body">
+          <p class="mb-2">
+            Backend Python/Django is my core - API design, data modeling, and application structure. I build
+            full-stack platforms for real clients: custom CMS-driven sites and geospatial pipelines
+            (DXF/KML/KMZ/TXT/JSON), where bad input is the norm and predictable output is the whole job, so I
+            design validation first and fail loudly rather than silently.
+          </p>
+          <p class="mb-2">
+            Before software, I spent a decade as a licensed surveying and geoinformatics engineer. That background
+            is why I build this way: I used to do these workflows by hand, so I know exactly where the data goes
+            wrong and what the field actually needs.
+          </p>
+          <p class="mb-0">
+            I care most about systems that stay maintainable after launch: reusable patterns over one-off code, and
+            interfaces that make user error hard.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4" id="skills">
+      <div class="panel">
+        <div class="panel-title">skills/</div>
+        <div class="panel-body">
+          <div class="skill-category mb-3">
+            <h6 class="text-accent">Backend &amp; APIs</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">Python</span>
+              <span class="tag">Django</span>
+              <span class="tag">Django REST Framework</span>
+              <span class="tag">PostgreSQL</span>
+              <span class="tag">MySQL</span>
+              <span class="tag">django-modeltranslation</span>
+            </div>
+          </div>
+          <div class="skill-category mb-3">
+            <h6 class="text-accent">GIS &amp; Data Processing</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">Leaflet</span>
+              <span class="tag">PostGIS</span>
+              <span class="tag">GeoDjango</span>
+              <span class="tag">GeoJSON</span>
+              <span class="tag">DXF/KML/KMZ</span>
+              <span class="tag">QGIS</span>
+            </div>
+          </div>
+          <div class="skill-category mb-3">
+            <h6 class="text-accent">DevOps &amp; Infrastructure</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">Docker</span>
+              <span class="tag">Nginx</span>
+              <span class="tag">Gunicorn</span>
+              <span class="tag">Redis</span>
+              <span class="tag">Celery</span>
+              <span class="tag">Git</span>
+            </div>
+          </div>
+          <div class="skill-category mb-3">
+            <h6 class="text-accent">Security &amp; Reliability</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">Brute-Force Protection</span>
+              <span class="tag">Role-Based Access Control</span>
+              <span class="tag">Secure Client Portals</span>
+              <span class="tag">Input Sanitization</span>
+            </div>
+          </div>
+          <div class="skill-category mb-3">
+            <h6 class="text-accent">Frontend</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">JavaScript</span>
+              <span class="tag">Bootstrap</span>
+              <span class="tag">HTML5 / CSS3</span>
+              <span class="tag">AJAX</span>
+            </div>
+          </div>
+          <div class="skill-category">
+            <h6 class="text-accent">Ways of Working</h6>
+            <div class="d-flex flex-wrap gap-1">
+              <span class="tag">Validation-First Design</span>
+              <span class="tag">Agile/Scrum</span>
+              <span class="tag">Solo Client Delivery</span>
+              <span class="tag">Ongoing Maintenance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-4" id="experience">
+      <div class="panel">
+        <div class="panel-title">experience/</div>
+        <div class="panel-body">
+          <div class="timeline">
+            <div class="timeline-item mb-4">
+              <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                <div class="fw-semibold">Software Engineer (Python/Django)</div>
+                <div class="small note-muted">2021 - Present</div>
+              </div>
+              <p class="small mb-2">Build full-stack web applications in Python/Django, both as part of an
+                in-house engineering team and through independent client contracts. On the freelance side, I
+                deliver platforms end to end - architecture, build, deployment, and ongoing maintenance - and have
+                shipped 3 client platforms this way, including a bilingual museum CMS built solo in ~3 months and a
+                volunteer operations platform with live city mapping.</p>
               <div class="d-flex flex-wrap gap-1">
                 <span class="tag">Python</span>
                 <span class="tag">Django</span>
-                <span class="tag">Django REST Framework</span>
+                <span class="tag">REST APIs</span>
                 <span class="tag">PostgreSQL</span>
                 <span class="tag">MySQL</span>
-                <span class="tag">django-modeltranslation</span>
-              </div>
-            </div>
-            <div class="skill-category mb-3">
-              <h6 class="text-accent">GIS & Data Processing</h6>
-              <div class="d-flex flex-wrap gap-1">
-                <span class="tag">Leaflet</span>
-                <span class="tag">PostGIS</span>
-                <span class="tag">GeoDjango</span>
-                <span class="tag">GeoJSON</span>
-                <span class="tag">DXF/KML/KMZ</span>
-                <span class="tag">QGIS</span>
-              </div>
-            </div>
-            <div class="skill-category mb-3">
-              <h6 class="text-accent">DevOps & Infrastructure</h6>
-              <div class="d-flex flex-wrap gap-1">
+                <span class="tag">JavaScript</span>
                 <span class="tag">Docker</span>
                 <span class="tag">Nginx</span>
                 <span class="tag">Gunicorn</span>
-                <span class="tag">Redis</span>
-                <span class="tag">Celery</span>
                 <span class="tag">Git</span>
+                <span class="tag">System Design</span>
+                <span class="tag">GIS</span>
               </div>
             </div>
-            <div class="skill-category mb-3">
-              <h6 class="text-accent">Security & Reliability</h6>
-              <div class="d-flex flex-wrap gap-1">
-                <span class="tag">Brute-Force Protection</span>
-                <span class="tag">Role-Based Access Control</span>
-                <span class="tag">Secure Client Portals</span>
-                <span class="tag">Input Sanitization</span>
+            <div class="timeline-item">
+              <div class="d-flex justify-content-between align-items-start mb-2 flex-wrap gap-2">
+                <div class="fw-semibold">Licensed Surveyor &amp; Geoinformatics Engineer</div>
+                <div class="small note-muted">2013 - 2021</div>
               </div>
-            </div>
-            <div class="skill-category mb-3">
-              <h6 class="text-accent">Frontend & Tools</h6>
+              <p class="small mb-2">Ran field surveys and data collection, then moved into geospatial processing:
+                vector formats, coordinate systems, and quality control on spatial deliverables. Repeatedly hit the
+                same gap - the tooling for this work was manual, brittle, or didn't exist - which is what pushed me
+                into software. That domain knowledge still drives what I build.</p>
               <div class="d-flex flex-wrap gap-1">
-                <span class="tag">Bootstrap</span>
-                <span class="tag">JavaScript</span>
-                <span class="tag">HTML5</span>
-                <span class="tag">CSS3</span>
-                <span class="tag">AJAX</span>
-              </div>
-            </div>
-            <div class="skill-category">
-              <h6 class="text-accent">Methodologies & Soft Skills</h6>
-              <div class="d-flex flex-wrap gap-1">
-                <span class="tag">Agile/Scrum</span>
-                <span class="tag">Validation-First Design</span>
-                <span class="tag">Problem Solving</span>
-                <span class="tag">Team Collaboration</span>
+                <span class="tag">Surveying</span>
+                <span class="tag">QGIS</span>
+                <span class="tag">DXF/KML</span>
+                <span class="tag">Coordinate Systems</span>
+                <span class="tag">Quality Control</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section class="row g-4 mt-4">
-      <div class="col-12">
-        <div class="panel" id="experience">
-          <div class="panel-title">experience/</div>
-          <div class="panel-body">
-            <div class="timeline">
-              <div class="timeline-item mb-4">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="fw-semibold">Software Engineer (Python/Django)</div>
-                  <div class="small text-secondary">2021 - Present</div>
-                </div>
-                <p class="small mb-2">Build full-stack web applications in Python/Django, both as part of an
-                  in-house engineering team and through independent client contracts. On the freelance side, I
-                  deliver platforms end to end - architecture, build, deployment, and ongoing maintenance - and have
-                  shipped 3 client platforms this way, including a bilingual museum CMS built solo in ~6 months and a
-                  volunteer operations platform with live city mapping.</p>
-                <div class="d-flex flex-wrap gap-1">
-                  <span class="tag">Python</span>
-                  <span class="tag">Django</span>
-                  <span class="tag">REST APIs</span>
-                  <span class="tag">PostgreSQL</span>
-                  <span class="tag">MySQL</span>
-                  <span class="tag">JavaScript</span>
-                  <span class="tag">Docker</span>
-                  <span class="tag">Nginx</span>
-                  <span class="tag">Gunicorn</span>
-                  <span class="tag">Git</span>
-                  <span class="tag">System Design</span>
-                  <span class="tag">GIS</span>
-                </div>
-              </div>
-              <div class="timeline-item">
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                  <div class="fw-semibold">Licensed Surveyor &amp; Geoinformatics Engineer</div>
-                  <div class="small text-secondary">2013 - 2021</div>
-                </div>
-                <p class="small mb-2">Ran field surveys and data collection, then moved into geospatial processing:
-                  vector formats, coordinate systems, and quality control on spatial deliverables. Repeatedly hit the
-                  same gap - the tooling for this work was manual, brittle, or didn't exist - which is what pushed me
-                  into software. That domain knowledge still drives what I build.</p>
-                <div class="d-flex flex-wrap gap-1">
-                  <span class="tag">Surveying</span>
-                  <span class="tag">QGIS</span>
-                  <span class="tag">DXF/KML</span>
-                  <span class="tag">Coordinate Systems</span>
-                  <span class="tag">Quality Control</span>
-                </div>
-              </div>
-            </div>
+
+    <section class="mb-4" id="contact">
+      <div class="panel">
+        <div class="panel-title">contact/</div>
+        <div class="panel-body">
+          <p class="mb-3">Open to Python/Django roles and contract work — backend systems, full-stack platforms, and
+            geospatial tooling. The fastest way to reach me is email.</p>
+          <div class="contact-actions">
+            <a class="btn btn-solid" href="assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+              rel="noopener">Download CV (PDF)</a>
+            <a class="btn btn-cta" href="mailto:magg_theod@live.com">magg_theod@live.com</a>
+            <a class="btn btn-dev" href="https://www.linkedin.com/in/theodorosmaggas/" target="_blank"
+              rel="noopener">LinkedIn</a>
+            <a class="btn btn-dev" href="https://github.com/Teo-Mgs" target="_blank" rel="noopener">GitHub</a>
           </div>
         </div>
       </div>
     </section>
-    <section class="row g-4 mt-4">
-      <div class="col-12" id="contact">
-        <div class="panel">
-          <div class="panel-title">contact/</div>
-          <div class="panel-body">
-            <p class="mb-3">Let's connect! I’m always open to discussing new opportunities, collaborations, or
-              challenging projects across Python development, backend systems, and modern web applications.</p>
-            <div class="d-flex flex-wrap gap-3 gap-lg-5 fs-5">
-              <a class="link-dev" href="mailto:magg_theod@live.com">email</a>
-              <a class="link-dev" href="https://www.linkedin.com/in/theodorosmaggas/" target="_blank"
-                rel="noopener">linkedin</a>
-              <a class="link-dev" href="https://github.com/Teo-Mgs" target="_blank" rel="noopener">github</a>
-              <a class="link-dev" href="assets/files/Theodoros_Mangas_CV.pdf" target="_blank" rel="noopener">download
-                cv</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <footer class="text-center small mt-5">
+
+    <footer class="text-center small mt-5 note-muted">
       © <span id="year"></span> Theodoros Mangas - Portfolio
     </footer>
   </main>

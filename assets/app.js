@@ -1,6 +1,8 @@
 const terminalBody = document.getElementById('terminalBody');
 const MATRIX_MODE_CLASS = 'matrixmode-active';
 
+let terminalReady = false;
+
 const commands = {
   whoareyou: {
     description: 'Display current user',
@@ -214,28 +216,9 @@ function initializeTerminal() {
     }
   });
 
-  if (!isTouch) {
-    setTimeout(() => {
-      terminalInput.focus({ preventScroll: true });
-    }, 100);
-    terminalInput.addEventListener('blur', () => {
-      setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
-    });
-  }
-
-  const scrollToLatestPrompt = () => {
+  requestAnimationFrame(() => {
     terminalBody.scrollTop = terminalBody.scrollHeight;
-  };
-  const scheduleInitialSync = () => {
-    requestAnimationFrame(scrollToLatestPrompt);
-    setTimeout(scrollToLatestPrompt, 80);
-    setTimeout(scrollToLatestPrompt, 240);
-    setTimeout(scrollToLatestPrompt, 600);
-  };
-
-  scheduleInitialSync();
-  window.addEventListener('load', scrollToLatestPrompt, { once: true });
-  window.addEventListener('pageshow', scrollToLatestPrompt);
+  });
 }
 
 function addCommandToHistory(cmd) {
@@ -270,7 +253,8 @@ const easterEggs = [
       '    │   └── Theodoros_Mangas_CV.pdf\n' +
       '    └── img/\n' +
       '        ├── favicon.png\n' +
-      '        └── og-card.png</pre>'
+      '        ├── og-card.png\n' +
+      '        └── screenshots/</pre>'
   },
   { match: (i) => i === 'sudo' || i.startsWith('sudo '), run: () => 'Permission denied: You are not root.' },
   { match: (i) => i === 'rm -rf /' || i === 'rm -rf *' || i === 'rm -rf', run: () => 'Nice try. This portfolio is read-only.' },
@@ -353,48 +337,96 @@ function addOutput(output) {
 
 function initializeBackToTop() {
   const backToTop = document.getElementById('backToTop');
-  const scrollContainer = document.querySelector('.portfolio-container');
   if (!backToTop) return;
 
   const toggleButtonVisibility = () => {
-    const scrollTop = scrollContainer ? scrollContainer.scrollTop : window.scrollY;
-    const viewportHeight = scrollContainer ? scrollContainer.clientHeight : window.innerHeight;
-    const shouldShow = scrollTop > viewportHeight * 0.7;
-    backToTop.classList.toggle('is-visible', shouldShow);
+    backToTop.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.7);
   };
 
   backToTop.addEventListener('click', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (scrollContainer) {
-      scrollContainer.scrollTo({
-        top: 0,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    } else {
-      window.scrollTo({
-        top: 0,
-        behavior: prefersReducedMotion ? 'auto' : 'smooth'
-      });
-    }
+    window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   });
 
-  if (scrollContainer) {
-    scrollContainer.addEventListener('scroll', toggleButtonVisibility, { passive: true });
-  } else {
-    window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
-  }
+  window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
   window.addEventListener('resize', toggleButtonVisibility);
   toggleButtonVisibility();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  initializeTerminal();
-  initializeBackToTop();
+function initializeGalleries() {
+  document.querySelectorAll('[data-gallery]').forEach((card) => {
+    const shots = card.querySelectorAll('.shot-frame img');
+    const thumbs = card.querySelectorAll('.shot-thumb');
+    const caption = card.querySelector('[data-caption-target]');
+    if (shots.length < 2 || thumbs.length !== shots.length) return;
 
-  document.querySelectorAll('.chip').forEach(chip => {
-    chip.addEventListener('click', () => {
-      const cmd = chip.getAttribute('data-cmd');
-      handleCommand(cmd);
+    const show = (index) => {
+      shots.forEach((img, i) => img.classList.toggle('is-active', i === index));
+      thumbs.forEach((btn, i) => {
+        const active = i === index;
+        btn.classList.toggle('is-active', active);
+        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+      if (caption) {
+        caption.textContent = shots[index].dataset.caption || '';
+      }
+    };
+
+    thumbs.forEach((btn, i) => {
+      btn.addEventListener('click', () => show(i));
+
+      btn.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        e.preventDefault();
+        const next = e.key === 'ArrowRight'
+          ? (i + 1) % thumbs.length
+          : (i - 1 + thumbs.length) % thumbs.length;
+        show(next);
+        thumbs[next].focus();
+      });
     });
   });
+}
+
+function initializeTerminalToggle() {
+  const toggle = document.getElementById('terminalToggle');
+  const wrap = document.getElementById('terminalWrap');
+  if (!toggle || !wrap) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+    wrap.hidden = isOpen;
+
+    if (!isOpen && !terminalReady) {
+
+      initializeTerminal();
+      terminalReady = true;
+
+      document.querySelectorAll('.chip').forEach((chip) => {
+        chip.addEventListener('click', () => handleCommand(chip.getAttribute('data-cmd')));
+      });
+    }
+
+    if (!isOpen) {
+      const input = document.getElementById('cliInput');
+      if (input) input.focus({ preventScroll: true });
+    }
+  });
+}
+
+function initializeStickyHeader() {
+  const header = document.getElementById('siteHeader');
+  if (!header) return;
+
+  const update = () => header.classList.toggle('is-stuck', window.scrollY > 8);
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  initializeGalleries();
+  initializeTerminalToggle();
+  initializeStickyHeader();
+  initializeBackToTop();
 });
