@@ -196,6 +196,35 @@ body.matrixmode-active.bg-dev{
   cursor: text;
   overflow-wrap: anywhere;
   -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(121,242,255,0.45) rgba(255,255,255,0.06);
+}
+
+.terminal-body::-webkit-scrollbar{
+  width: 10px;
+}
+
+.terminal-body::-webkit-scrollbar-track{
+  background: rgba(255,255,255,0.06);
+  border-radius: 999px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb{
+  background: linear-gradient(
+    180deg,
+    rgba(121,242,255,0.5),
+    rgba(154,255,121,0.4)
+  );
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 999px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover{
+  background: linear-gradient(
+    180deg,
+    rgba(121,242,255,0.7),
+    rgba(154,255,121,0.58)
+  );
 }
 
 .terminal-body pre{

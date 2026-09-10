@@ -381,27 +381,33 @@ function initializeGalleries() {
   });
 }
 
+function buildTerminalOnce() {
+  if (terminalReady) return;
+  terminalReady = true;
+
+  initializeTerminal();
+
+  document.querySelectorAll('.chip').forEach((chip) => {
+    chip.addEventListener('click', () => handleCommand(chip.getAttribute('data-cmd')));
+  });
+}
+
 function initializeTerminalToggle() {
   const toggle = document.getElementById('terminalToggle');
   const wrap = document.getElementById('terminalWrap');
   if (!toggle || !wrap) return;
+
+  const startOpen = toggle.getAttribute('aria-expanded') === 'true';
+  wrap.hidden = !startOpen;
+  if (startOpen) buildTerminalOnce();
 
   toggle.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
     wrap.hidden = isOpen;
 
-    if (!isOpen && !terminalReady) {
-
-      initializeTerminal();
-      terminalReady = true;
-
-      document.querySelectorAll('.chip').forEach((chip) => {
-        chip.addEventListener('click', () => handleCommand(chip.getAttribute('data-cmd')));
-      });
-    }
-
     if (!isOpen) {
+      buildTerminalOnce();
       const input = document.getElementById('cliInput');
       if (input) input.focus({ preventScroll: true });
     }
