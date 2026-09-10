@@ -30,12 +30,12 @@
   <text x="74" y="212" font-size="68" font-weight="700" fill="#ffffff">Theodoros Mangas</text>
 
   <!-- positioning line -->
-  <text x="74" y="286" font-size="34" fill="#79f2ff">Licensed surveyor turned Python/Django engineer</text>
+  <text x="74" y="286" font-size="34" fill="#79f2ff">Python/Django engineer for full-stack client platforms</text>
 
   <!-- differentiator -->
-  <text x="74" y="352" font-size="27" fill="#ffffff" opacity="0.80">I build the tooling for the industry I came from:</text>
-  <text x="74" y="394" font-size="27" fill="#ffffff" opacity="0.80">geospatial pipelines, validation-heavy workflows,</text>
-  <text x="74" y="436" font-size="27" fill="#ffffff" opacity="0.80">and web apps that hold up in the field.</text>
+  <text x="74" y="352" font-size="27" fill="#ffffff" opacity="0.80">Custom CMS builds, geospatial pipelines, and</text>
+  <text x="74" y="394" font-size="27" fill="#ffffff" opacity="0.80">validation-heavy systems - backed by a decade</text>
+  <text x="74" y="436" font-size="27" fill="#ffffff" opacity="0.80">as a licensed surveyor.</text>
 
   <line x1="74" y1="486" x2="620" y2="486" stroke="url(#rule)" stroke-width="2" />
 

@@ -4,7 +4,7 @@ const MATRIX_MODE_CLASS = 'matrixmode-active';
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas — licensed surveyor turned Python/Django engineer'
+    execute: () => 'Theodoros Mangas - Python/Django engineer, ex-licensed surveyor'
   },
   projects: {
     description: 'View my projects',
@@ -62,7 +62,7 @@ const commands = {
       Object.entries(commands)
         .filter(([, obj]) => !obj.hidden)
         .forEach(([cmd, obj]) => {
-          helpText += `<div><span class="text-success">${cmd}</span> — ${obj.description}</div>`;
+          helpText += `<div><span class="text-success">${cmd}</span> - ${obj.description}</div>`;
         });
       helpText += '</div>';
       return helpText;
@@ -118,8 +118,6 @@ function appendNewPrompt() {
 }
 
 function initializeTerminal() {
-  // Either signal alone misses cases: some touch-only browsers still report a
-  // fine pointer, and hybrid laptops report both.
   const isTouch =
     window.matchMedia('(hover: none), (pointer: coarse)').matches ||
     navigator.maxTouchPoints > 0 ||
@@ -136,12 +134,9 @@ function initializeTerminal() {
   terminalInput.setAttribute('autocapitalize', 'off');
   terminalInput.setAttribute('spellcheck', 'false');
   terminalInput.setAttribute('maxlength', '256');
-  // 16px avoids iOS Safari's automatic zoom-on-focus.
   terminalInput.style.fontSize = '16px';
 
   if (isTouch) {
-    // An off-screen, pointer-events:none input can't be focused by a tap,
-    // which leaves the terminal unusable on a phone. Transparent, but present.
     terminalInput.style.position = 'absolute';
     terminalInput.style.inset = '0';
     terminalInput.style.width = '100%';
@@ -162,7 +157,6 @@ function initializeTerminal() {
   }
 
   terminalBody.addEventListener('click', (e) => {
-    // Let chips handle their own taps rather than stealing focus to the input.
     if (e.target.closest('.chip')) return;
     e.preventDefault();
     const scrollPos = terminalBody.scrollTop;
@@ -182,8 +176,6 @@ function initializeTerminal() {
       if (input) {
         addCommandToHistory(input);
         handleCommand(input);
-        // Refocus so consecutive commands work; on touch this also keeps the
-        // keyboard up instead of dismissing it after each Enter.
         setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
       }
     }
@@ -222,8 +214,6 @@ function initializeTerminal() {
     }
   });
 
-  // Desktop only: on touch, autofocus and the blur trap would pop the on-screen
-  // keyboard on load and refuse to let the user dismiss it.
   if (!isTouch) {
     setTimeout(() => {
       terminalInput.focus({ preventScroll: true });
@@ -288,7 +278,7 @@ const easterEggs = [
   { match: (i) => i === 'exit' || i === 'logout', run: () => 'Nice try. There is no escape.' },
   { match: (i) => i === 'quit', run: () => 'No quitters here.' },
   { match: (i) => i === 'pwd', run: () => '/home/theodoros/portfolio' },
-  { match: (i) => i === 'whoami', run: () => 'visitor — but you\'re welcome here.' },
+  { match: (i) => i === 'whoami', run: () => 'visitor - but you\'re welcome here.' },
   { match: (i) => i === ':(){ :|:& };:', run: () => 'Fork bomb detected. Nice try.' },
   { match: (i) => i === 'make coffee', run: () => 'Error: No coffee machine connected to /dev/usb0.' },
   { match: (i) => i === 'git blame', run: () => 'Blaming theodoros... (100% of commits, as expected)' },

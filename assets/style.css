@@ -116,23 +116,18 @@ body.matrixmode-active.bg-dev{
 .panel-body{ padding: 14px; }
 
 @media (min-width: 992px){
-  #about.panel,
-  #projects.panel{
+  /* Every panel matches the height of its tallest sibling in the same row,
+     regardless of how much content it holds. Bootstrap's row is already a
+     flex container with equal-height columns; this just makes the panel
+     itself fill that column instead of collapsing to its content height. */
+  .panel{
     height: 100%;
     display: flex;
     flex-direction: column;
   }
 
-  #projects .panel-body{
+  .panel-body{
     flex: 1;
-  }
-
-  /* Let about size to its content; stretching it left a large empty gap. */
-  #about .panel-body{
-    flex: 0 0 auto;
-  }
-  #about.panel{
-    height: auto;
   }
 
   #projects .panel-body{
@@ -169,22 +164,16 @@ body.matrixmode-active.bg-dev{
     );
   }
 
-  #skills.panel,
-  #repos.panel{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  /* Skills has the row to itself now (live-tools/ removed) - lay categories
+     out in columns instead of one long stacked list. */
+  #skills .panel-body{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 8px 24px;
+    align-content: start;
   }
-
-  #skills .panel-body,
-  #repos .panel-body{
-    flex: 0 0 auto;
-  }
-
-  /* Push the private-source note to the bottom instead of leaving a gap
-     between it and the repo cards. */
-  #repos > p:last-child{
-    margin-top: auto !important;
+  #skills .skill-category{
+    margin-bottom: 0 !important;
   }
 }
 
@@ -209,31 +198,10 @@ body.matrixmode-active.bg-dev{
 }
 .link-dev:hover{ text-decoration: underline; }
 
-.repo-grid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 12px;
-}
-@media (max-width: 992px){
-  .repo-grid{ grid-template-columns: 1fr; }
-}
-.repo-card{
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 12px;
-  background: rgba(0,0,0,0.20);
-  text-decoration: none;
-  color: var(--text);
-}
-.repo-card:hover{
-  border-color: rgba(121,242,255,0.30);
-  background: rgba(0,0,0,0.28);
-}
-
 .hint{
   color: rgba(255,255,255,0.65);
 }
-/* Readable secondary text — Bootstrap's .text-secondary is too dim on this bg. */
+/* Readable secondary text - Bootstrap's .text-secondary is too dim on this bg. */
 .note-muted{
   color: rgba(255,255,255,0.60);
 }
