@@ -149,9 +149,8 @@ function initializeTerminal() {
 
   terminalBody.addEventListener('click', (e) => {
     if (e.target.closest('.chip')) return;
-    const scrollPos = terminalBody.scrollTop;
     terminalInput.focus({ preventScroll: true });
-    terminalBody.scrollTop = scrollPos;
+    terminalBody.scrollTop = terminalBody.scrollHeight;
   });
 
   terminalInput.addEventListener('input', () => {
@@ -226,6 +225,7 @@ function updateCommandDisplay(text) {
 
   if (line) {
     line.innerHTML = typingPromptHTML(text);
+    terminalBody.scrollTop = terminalBody.scrollHeight;
   }
 }
 
