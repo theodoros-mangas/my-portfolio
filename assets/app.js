@@ -6,7 +6,7 @@ let terminalReady = false;
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas - Python/Django engineer, ex-licensed surveyor'
+    execute: () => 'Theodoros Mangas - Software engineer (Python), licensed surveyor'
   },
   projects: {
     description: 'View my projects',
@@ -106,6 +106,27 @@ const commands = {
 
 let commandHistory = [];
 let historyIndex = -1;
+let terminalInput = null;
+let scrollFrame = 0;
+
+// scrollHeight is stale until the browser reflows the nodes we just appended,
+// so defer the write to the next frame and coalesce bursts into one.
+function scrollToBottom() {
+  if (scrollFrame) return;
+  scrollFrame = requestAnimationFrame(() => {
+    scrollFrame = 0;
+    terminalBody.scrollTop = terminalBody.scrollHeight;
+  });
+}
+
+function focusInput() {
+  if (terminalInput) terminalInput.focus({ preventScroll: true });
+}
+
+// Wipes the rendered lines without detaching the input that lives alongside them.
+function clearTerminalLines() {
+  terminalBody.querySelectorAll('.line').forEach((line) => line.remove());
+}
 
 const PROMPT_PREFIX = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ ';
 const promptLineHTML = (cmdText) => `${PROMPT_PREFIX}<span class="cmd">${cmdText}</span>`;
@@ -120,7 +141,7 @@ function appendNewPrompt() {
 }
 
 function initializeTerminal() {
-  const terminalInput = document.createElement('input');
+  terminalInput = document.createElement('input');
   terminalInput.type = 'text';
   terminalInput.id = 'cliInput';
   terminalInput.className = 'cli-input';
@@ -135,6 +156,10 @@ function initializeTerminal() {
   terminalInput.setAttribute('inputmode', 'text');
   terminalInput.style.fontSize = '16px';
 
+  // Kept visually hidden but focusable. Anchored to the top of the scroll
+  // content rather than the viewport edge: an absolutely positioned box with
+  // bottom:0 sits wherever the container is scrolled, and the browser's
+  // scroll-focused-element-into-view then fights our own scrollToBottom.
   terminalInput.style.position = 'absolute';
   terminalInput.style.opacity = '0';
   terminalInput.style.width = '1px';
@@ -143,19 +168,30 @@ function initializeTerminal() {
   terminalInput.style.border = 'none';
   terminalInput.style.background = 'transparent';
   terminalInput.style.left = '0';
-  terminalInput.style.bottom = '0';
+  terminalInput.style.top = '0';
+  terminalInput.style.pointerEvents = 'none';
   terminalBody.style.position = 'relative';
   terminalBody.appendChild(terminalInput);
 
   terminalBody.addEventListener('click', (e) => {
     if (e.target.closest('.chip')) return;
-    terminalInput.focus({ preventScroll: true });
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+    // Don't steal focus or yank the view while the user is selecting text.
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) return;
+    focusInput();
+    scrollToBottom();
   });
 
   terminalInput.addEventListener('input', () => {
     updateCommandDisplay(terminalInput.value);
   });
+
+  const recallHistory = (value) => {
+    terminalInput.value = value;
+    updateCommandDisplay(value);
+    // Caret to the end, after the value assignment has been applied.
+    terminalInput.setSelectionRange(value.length, value.length);
+  };
 
   terminalInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
@@ -166,46 +202,38 @@ function initializeTerminal() {
       if (input) {
         addCommandToHistory(input);
         handleCommand(input);
-        setTimeout(() => terminalInput.focus({ preventScroll: true }), 0);
+      } else {
+        // Bare Enter: retire the current prompt and open a fresh one.
+        renderCommandLine('');
+        appendNewPrompt();
+        scrollToBottom();
       }
       return;
     }
 
     if (e.key === 'ArrowUp') {
-      if (commandHistory.length > 0) {
-        if (historyIndex === -1) {
-          historyIndex = commandHistory.length - 1;
-        } else if (historyIndex > 0) {
-          historyIndex--;
-        }
-        terminalInput.value = commandHistory[historyIndex];
-        updateCommandDisplay(terminalInput.value);
-        setTimeout(() => {
-          terminalInput.selectionStart = terminalInput.selectionEnd = terminalInput.value.length;
-        }, 0);
-        e.preventDefault();
+      if (commandHistory.length === 0) return;
+      e.preventDefault();
+      if (historyIndex === -1) {
+        historyIndex = commandHistory.length - 1;
+      } else if (historyIndex > 0) {
+        historyIndex--;
       }
+      recallHistory(commandHistory[historyIndex]);
     } else if (e.key === 'ArrowDown') {
-      if (commandHistory.length > 0 && historyIndex !== -1) {
-        if (historyIndex < commandHistory.length - 1) {
-          historyIndex++;
-          terminalInput.value = commandHistory[historyIndex];
-        } else {
-          historyIndex = -1;
-          terminalInput.value = '';
-        }
-        updateCommandDisplay(terminalInput.value);
-        setTimeout(() => {
-          terminalInput.selectionStart = terminalInput.selectionEnd = terminalInput.value.length;
-        }, 0);
-        e.preventDefault();
+      if (commandHistory.length === 0 || historyIndex === -1) return;
+      e.preventDefault();
+      if (historyIndex < commandHistory.length - 1) {
+        historyIndex++;
+        recallHistory(commandHistory[historyIndex]);
+      } else {
+        historyIndex = -1;
+        recallHistory('');
       }
     }
   });
 
-  requestAnimationFrame(() => {
-    terminalBody.scrollTop = terminalBody.scrollHeight;
-  });
+  scrollToBottom();
 }
 
 function addCommandToHistory(cmd) {
@@ -220,13 +248,19 @@ function lastLine() {
   return lines.length ? lines[lines.length - 1] : null;
 }
 
-function updateCommandDisplay(text) {
-  const line = lastLine();
-
-  if (line) {
-    line.innerHTML = typingPromptHTML(text);
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+// The prompt currently accepting input, recreated if a clear removed it.
+function activePromptLine() {
+  let line = lastLine();
+  if (!line || !line.querySelector('.cursor')) {
+    appendNewPrompt();
+    line = lastLine();
   }
+  return line;
+}
+
+function updateCommandDisplay(text) {
+  activePromptLine().innerHTML = typingPromptHTML(text);
+  scrollToBottom();
 }
 
 const easterEggs = [
@@ -273,16 +307,9 @@ const easterEggs = [
 ];
 
 function renderCommandLine(input) {
-  const activePrompt = lastLine();
-  if (activePrompt && activePrompt.querySelector('.cursor')) {
-    activePrompt.className = 'line';
-    activePrompt.innerHTML = promptLineHTML(input);
-  } else {
-    const commandLine = document.createElement('div');
-    commandLine.className = 'line';
-    commandLine.innerHTML = promptLineHTML(input);
-    terminalBody.appendChild(commandLine);
-  }
+  const line = activePromptLine();
+  line.className = 'line';
+  line.innerHTML = promptLineHTML(input);
 }
 
 function handleCommand(input) {
@@ -291,9 +318,10 @@ function handleCommand(input) {
   const normalizedInput = input.trim().toLowerCase();
 
   if (normalizedInput === 'cls') {
-    terminalBody.innerHTML = '';
+    clearTerminalLines();
     appendNewPrompt();
-    terminalBody.scrollTop = terminalBody.scrollHeight;
+    scrollToBottom();
+    focusInput();
     return;
   }
 
@@ -314,11 +342,12 @@ function handleCommand(input) {
   }
 
   if (cmd === 'clear') {
-    terminalBody.innerHTML = '';
+    clearTerminalLines();
   }
 
   appendNewPrompt();
-  terminalBody.scrollTop = terminalBody.scrollHeight;
+  scrollToBottom();
+  focusInput();
 }
 
 function addOutput(output) {
@@ -388,7 +417,13 @@ function buildTerminalOnce() {
   initializeTerminal();
 
   document.querySelectorAll('.chip').forEach((chip) => {
-    chip.addEventListener('click', () => handleCommand(chip.getAttribute('data-cmd')));
+    chip.addEventListener('click', () => {
+      const cmd = chip.getAttribute('data-cmd');
+      if (!cmd) return;
+      if (terminalInput) terminalInput.value = '';
+      addCommandToHistory(cmd.trim().toLowerCase());
+      handleCommand(cmd);
+    });
   });
 }
 
