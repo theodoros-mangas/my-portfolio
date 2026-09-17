@@ -208,61 +208,62 @@
 
             <article class="project-card" data-gallery>
               <div class="shot-frame">
-                <img src="assets/img/screenshots/iasmos_museum_01.webp"
-                  alt="Iasmos museum public homepage: bilingual navigation with a photo carousel of the museum building and a news panel"
-                  class="is-active" width="1600" height="900" decoding="async"
-                  data-caption="Public site — bilingual (EL/EN) with staff-managed carousel and announcements">
-                <img src="assets/img/screenshots/iasmos_museum_02.webp"
-                  alt="Custom CMS control panel listing carousel slides with published status, edit and delete actions, and a sidebar of manageable content types"
+                <img src="assets/img/screenshots/Handytools_03.webp"
+                  alt="HandyTools tool library: a filterable grid of tool cards including Surveyor Toolkit, PDF multi-tool, unit converter and image utilities"
+                  class="is-active" width="1600" height="900" loading="lazy" decoding="async"
+                  data-caption="Tool library — category filters and live search across the modular toolbox">
+                <img src="assets/img/screenshots/Handytools_04.webp"
+                  alt="Surveyor Toolkit map workspace with a layers sidebar, drawing and measurement toolbar, and an onboarding dialog explaining GeoJSON, KML, KMZ and DXF import"
                   width="1600" height="900" loading="lazy" decoding="async"
-                  data-caption="Custom CMS — staff manage exhibits, events, pages and media themselves">
+                  data-caption="Surveyor Toolkit — import DXF/KML/KMZ/GeoJSON, measure, and convert coordinates">
+                <img src="assets/img/screenshots/Handytools_02.webp"
+                  alt="HandyTools landing page headline about licensing, priority queueing and API access, beside a system status panel showing API, queue and database online"
+                  width="1600" height="900" loading="lazy" decoding="async"
+                  data-caption="Landing — licensing tiers, priority queueing, and live system status">
               </div>
-              <div class="shot-thumbs" role="tablist" aria-label="Iasmos museum screenshots">
+              <div class="shot-thumbs" role="tablist" aria-label="HandyTools screenshots">
                 <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
-                  aria-label="Public homepage">
-                  <img src="assets/img/screenshots/iasmos_museum_01.webp" alt="" width="160" height="90"
-                    decoding="async">
+                  aria-label="Tool library">
+                  <img src="assets/img/screenshots/Handytools_03.webp" alt="" width="160" height="90" decoding="async">
                 </button>
                 <button class="shot-thumb" type="button" role="tab" aria-selected="false"
-                  aria-label="CMS control panel">
-                  <img src="assets/img/screenshots/iasmos_museum_02.webp" alt="" width="160" height="90"
-                    decoding="async">
+                  aria-label="Surveyor toolkit map">
+                  <img src="assets/img/screenshots/Handytools_04.webp" alt="" width="160" height="90" decoding="async">
+                </button>
+                <button class="shot-thumb" type="button" role="tab" aria-selected="false" aria-label="Landing page">
+                  <img src="assets/img/screenshots/Handytools_02.webp" alt="" width="160" height="90" decoding="async">
                 </button>
               </div>
-              <p class="shot-caption" data-caption-target>Public site — bilingual (EL/EN) with staff-managed carousel
-                and announcements</p>
+              <p class="shot-caption" data-caption-target>Tool library — category filters and live search across the
+                modular toolbox</p>
               <div class="card-body">
                 <div class="card-head">
                   <div>
-                    <div class="project-title">Iasmos Culture Club Museum</div>
-                    <div class="project-kicker">Client project — bilingual museum platform</div>
+                    <div class="project-title">HandyTools</div>
+                    <div class="project-kicker">Modular toolbox SaaS platform</div>
                   </div>
-                  <span class="status-pill status-live">live</span>
+                  <span class="status-pill status-build">in build</span>
                 </div>
-                <p class="project-desc">Full-stack Django site built for a museum client in place of an off-the-shelf
-                  CMS, so every part of the site — exhibits, events, pages, team, media — is editable by their own
-                  staff through a purpose-built moderator dashboard with role-based access and soft-delete recovery.
-                </p>
+                <p class="project-desc">Modular platform architecture with reusable components, shared UI components,
+                  and standardized patterns for converters, utilities, and geospatial helpers.</p>
                 <div class="project-meta">
-                  <strong>Highlights:</strong> Custom CMS with full CRUD over exhibits and events (RSVP booking +
-                  calendar export); bilingual EL/EN throughout; brute-force login protection; cookie-free
-                  first-party analytics.<br>
-                  <strong>Status:</strong> Built solo over ~3 months, delivered September 2026. In daily use by the
-                  museum team; I maintain it on an ongoing basis.
+                  <strong>Architecture:</strong> A shared component layer with standardized patterns, so each new
+                  tool reuses the existing converters, validation, and UI instead of rebuilding them. Currently
+                  supports 5+ engineering utilities.<br>
+                  <strong>Status:</strong> Active build — licensing, queueing and API access in place. Source is
+                  private.
                 </div>
                 <div class="tech-stack">
                   <span class="tag">Python</span>
                   <span class="tag">Django</span>
-                  <span class="tag">PostgreSQL</span>
-                  <span class="tag">django-modeltranslation</span>
-                  <span class="tag">django-axes</span>
+                  <span class="tag">PostGIS</span>
+                  <span class="tag">GeoDjango</span>
+                  <span class="tag">DRF</span>
+                  <span class="tag">Redis</span>
+                  <span class="tag">Celery</span>
+                  <span class="tag">Leaflet</span>
                   <span class="tag">Docker</span>
                   <span class="tag">Nginx</span>
-                  <span class="tag">Gunicorn</span>
-                </div>
-                <div class="project-actions">
-                  <a href="https://www.museum-iasmos-cultureclub.gr/en/" class="btn btn-sm btn-cta" target="_blank"
-                    rel="noopener">Visit live site →</a>
                 </div>
               </div>
             </article>
@@ -326,62 +327,61 @@
 
             <article class="project-card" data-gallery>
               <div class="shot-frame">
-                <img src="assets/img/screenshots/Handytools_03.webp"
-                  alt="HandyTools tool library: a filterable grid of tool cards including Surveyor Toolkit, PDF multi-tool, unit converter and image utilities"
-                  class="is-active" width="1600" height="900" loading="lazy" decoding="async"
-                  data-caption="Tool library — category filters and live search across the modular toolbox">
-                <img src="assets/img/screenshots/Handytools_04.webp"
-                  alt="Surveyor Toolkit map workspace with a layers sidebar, drawing and measurement toolbar, and an onboarding dialog explaining GeoJSON, KML, KMZ and DXF import"
+                <img src="assets/img/screenshots/iasmos_museum_01.webp"
+                  alt="Iasmos museum public homepage: bilingual navigation with a photo carousel of the museum building and a news panel"
+                  class="is-active" width="1600" height="900" decoding="async"
+                  data-caption="Public site — bilingual (EL/EN) with staff-managed carousel and announcements">
+                <img src="assets/img/screenshots/iasmos_museum_02.webp"
+                  alt="Custom CMS control panel listing carousel slides with published status, edit and delete actions, and a sidebar of manageable content types"
                   width="1600" height="900" loading="lazy" decoding="async"
-                  data-caption="Surveyor Toolkit — import DXF/KML/KMZ/GeoJSON, measure, and convert coordinates">
-                <img src="assets/img/screenshots/Handytools_02.webp"
-                  alt="HandyTools landing page headline about licensing, priority queueing and API access, beside a system status panel showing API, queue and database online"
-                  width="1600" height="900" loading="lazy" decoding="async"
-                  data-caption="Landing — licensing tiers, priority queueing, and live system status">
+                  data-caption="Custom CMS — staff manage exhibits, events, pages and media themselves">
               </div>
-              <div class="shot-thumbs" role="tablist" aria-label="HandyTools screenshots">
+              <div class="shot-thumbs" role="tablist" aria-label="Iasmos museum screenshots">
                 <button class="shot-thumb is-active" type="button" role="tab" aria-selected="true"
-                  aria-label="Tool library">
-                  <img src="assets/img/screenshots/Handytools_03.webp" alt="" width="160" height="90" decoding="async">
+                  aria-label="Public homepage">
+                  <img src="assets/img/screenshots/iasmos_museum_01.webp" alt="" width="160" height="90"
+                    decoding="async">
                 </button>
                 <button class="shot-thumb" type="button" role="tab" aria-selected="false"
-                  aria-label="Surveyor toolkit map">
-                  <img src="assets/img/screenshots/Handytools_04.webp" alt="" width="160" height="90" decoding="async">
-                </button>
-                <button class="shot-thumb" type="button" role="tab" aria-selected="false" aria-label="Landing page">
-                  <img src="assets/img/screenshots/Handytools_02.webp" alt="" width="160" height="90" decoding="async">
+                  aria-label="CMS control panel">
+                  <img src="assets/img/screenshots/iasmos_museum_02.webp" alt="" width="160" height="90"
+                    decoding="async">
                 </button>
               </div>
-              <p class="shot-caption" data-caption-target>Tool library — category filters and live search across the
-                modular toolbox</p>
+              <p class="shot-caption" data-caption-target>Public site — bilingual (EL/EN) with staff-managed carousel
+                and announcements</p>
               <div class="card-body">
                 <div class="card-head">
                   <div>
-                    <div class="project-title">HandyTools</div>
-                    <div class="project-kicker">Modular toolbox SaaS platform</div>
+                    <div class="project-title">Iasmos Culture Club Museum</div>
+                    <div class="project-kicker">Client project — bilingual museum platform</div>
                   </div>
-                  <span class="status-pill status-build">in build</span>
+                  <span class="status-pill status-live">live</span>
                 </div>
-                <p class="project-desc">Modular platform architecture with reusable components, shared UI components,
-                  and standardized patterns for converters, utilities, and geospatial helpers.</p>
+                <p class="project-desc">Full-stack Django site built for a museum client in place of an off-the-shelf
+                  CMS, so every part of the site — exhibits, events, pages, team, media — is editable by their own
+                  staff through a purpose-built moderator dashboard with role-based access and soft-delete recovery.
+                </p>
                 <div class="project-meta">
-                  <strong>Architecture:</strong> A shared component layer with standardized patterns, so each new
-                  tool reuses the existing converters, validation, and UI instead of rebuilding them. Currently
-                  supports 5+ engineering utilities.<br>
-                  <strong>Status:</strong> Active build — licensing, queueing and API access in place. Source is
-                  private.
+                  <strong>Highlights:</strong> Custom CMS with full CRUD over exhibits and events (RSVP booking +
+                  calendar export); bilingual EL/EN throughout; brute-force login protection; cookie-free
+                  first-party analytics.<br>
+                  <strong>Status:</strong> Built solo over ~3 months, delivered September 2026. In daily use by the
+                  museum team; I maintain it on an ongoing basis.
                 </div>
                 <div class="tech-stack">
                   <span class="tag">Python</span>
                   <span class="tag">Django</span>
-                  <span class="tag">PostGIS</span>
-                  <span class="tag">GeoDjango</span>
-                  <span class="tag">DRF</span>
-                  <span class="tag">Redis</span>
-                  <span class="tag">Celery</span>
-                  <span class="tag">Leaflet</span>
+                  <span class="tag">PostgreSQL</span>
+                  <span class="tag">django-modeltranslation</span>
+                  <span class="tag">django-axes</span>
                   <span class="tag">Docker</span>
                   <span class="tag">Nginx</span>
+                  <span class="tag">Gunicorn</span>
+                </div>
+                <div class="project-actions">
+                  <a href="https://www.museum-iasmos-cultureclub.gr/en/" class="btn btn-sm btn-cta" target="_blank"
+                    rel="noopener">Visit live site →</a>
                 </div>
               </div>
             </article>
