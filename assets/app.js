@@ -368,6 +368,11 @@ function initializeBackToTop() {
   backToTop.addEventListener('click', () => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     window.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+    // Drop the stale section hash left by the nav anchors. replaceState rather
+    // than location.hash = '', which leaves a bare '#' and adds a history entry.
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
   });
 
   window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
