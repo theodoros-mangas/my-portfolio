@@ -415,6 +415,68 @@ function initializeGalleries() {
   });
 }
 
+function initializeLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  const frames = document.querySelectorAll('.shot-frame');
+  if (!lightbox || !frames.length) return;
+
+  const image = lightbox.querySelector('.lightbox-img');
+  const closeButton = lightbox.querySelector('.lightbox-close');
+  let lastTrigger = null;
+
+  const close = () => {
+    lightbox.classList.remove('is-open');
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+    image.src = '';
+    // Return focus to the trigger.
+    if (lastTrigger) {
+      lastTrigger.focus();
+      lastTrigger = null;
+    }
+  };
+
+  const open = (shot, trigger) => {
+    image.src = shot.currentSrc || shot.src;
+    image.alt = shot.alt || '';
+    lightbox.setAttribute('aria-label', shot.alt || 'Full size screenshot');
+    lastTrigger = trigger;
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    // Next frame, so the fade-in transition runs.
+    requestAnimationFrame(() => lightbox.classList.add('is-open'));
+    closeButton.focus();
+  };
+
+  frames.forEach((frame) => {
+    // Delegated to the image, so the letterbox area stays inert.
+    frame.addEventListener('click', (e) => {
+      const shot = e.target.closest('img');
+      if (shot) open(shot, document.activeElement);
+    });
+  });
+
+  closeButton.addEventListener('click', close);
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox.hidden) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      close();
+      return;
+    }
+    // Focus trap: the close button is the only focusable node.
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      closeButton.focus();
+    }
+  });
+}
+
 function buildTerminalOnce() {
   if (terminalReady) return;
   terminalReady = true;
@@ -465,6 +527,7 @@ function initializeStickyHeader() {
 
 document.addEventListener('DOMContentLoaded', () => {
   initializeGalleries();
+  initializeLightbox();
   initializeTerminalToggle();
   initializeStickyHeader();
   initializeBackToTop();

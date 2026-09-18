@@ -464,10 +464,14 @@ body.matrixmode-active.bg-dev{
   object-position: center;
   opacity: 0;
   transition: opacity 0.3s ease;
+  /* Stacked shots: only the active one is interactive. */
+  pointer-events: none;
 }
 
 .shot-frame img.is-active{
   opacity: 1;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 @media (prefers-reduced-motion: reduce){
@@ -697,3 +701,64 @@ body.matrixmode-active.bg-dev{
 }
 
 .skip-link:focus{ top: 12px; }
+
+.lightbox{
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  background: rgba(3,6,16,0.88);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.lightbox[hidden]{ display: none; }
+
+.lightbox.is-open{ opacity: 1; }
+
+.lightbox-img{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(0,0,0,0.45);
+}
+
+.lightbox-close{
+  position: fixed;
+  top: 16px;
+  right: 20px;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(121,242,255,0.55);
+  background: #153347;
+  color: var(--accent);
+  font-size: 1.1rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.lightbox-close:hover{
+  border-color: rgba(154,255,121,0.75);
+  color: var(--accent2);
+}
+
+.lightbox-close:focus-visible{
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .lightbox{ transition: none; }
+}
