@@ -43,6 +43,13 @@ const commands = {
       return 'Opening email client...';
     }
   },
+  phone: {
+    description: 'Call me',
+    execute: () => {
+      window.location.href = 'tel:+306972690483';
+      return 'Calling +30 697 269 0483...';
+    }
+  },
   about: {
     description: 'Read about me',
     execute: () => {
