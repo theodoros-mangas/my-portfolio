@@ -6,7 +6,7 @@ let terminalReady = false;
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas - Software engineer (Python), licensed surveyor'
+    execute: () => 'Theodoros Mangas — Software engineer (Python/Django), licensed surveyor'
   },
   projects: {
     description: 'View my projects',
@@ -135,8 +135,12 @@ function clearTerminalLines() {
   terminalBody.querySelectorAll('.line').forEach((line) => line.remove());
 }
 
+const escapeHTML = (text) => text.replace(/[&<>"']/g, (ch) => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+})[ch]);
+
 const PROMPT_PREFIX = '<span class="prompt">teo@dev</span>:<span class="path">~</span>$ ';
-const promptLineHTML = (cmdText) => `${PROMPT_PREFIX}<span class="cmd">${cmdText}</span>`;
+const promptLineHTML = (cmdText) => `${PROMPT_PREFIX}<span class="cmd">${escapeHTML(cmdText)}</span>`;
 const typingPromptHTML = (cmdText) => `${promptLineHTML(cmdText)}<span class="cursor" aria-hidden="true"></span>`;
 const emptyPromptHTML = () => `${PROMPT_PREFIX}<span class="cursor" aria-hidden="true"></span>`;
 
@@ -345,7 +349,7 @@ function handleCommand(input) {
       addOutput(result);
     }
   } else {
-    addOutput(`<span class="error">Command not found: ${cmd}</span><br><span class="hint">Type</span> <span class="text-success">help</span> <span class="hint">to see available commands</span>`);
+    addOutput(`<span class="error">Command not found: ${escapeHTML(cmd)}</span><br><span class="hint">Type</span> <span class="text-success">help</span> <span class="hint">to see available commands</span>`);
   }
 
   if (cmd === 'clear') {
@@ -400,6 +404,7 @@ function initializeGalleries() {
         const active = i === index;
         btn.classList.toggle('is-active', active);
         btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        btn.tabIndex = active ? 0 : -1;
       });
       if (caption) {
         caption.textContent = shots[index].dataset.caption || '';
@@ -459,7 +464,7 @@ function initializeLightbox() {
     // Delegated to the image, so the letterbox area stays inert.
     frame.addEventListener('click', (e) => {
       const shot = e.target.closest('img');
-      if (shot) open(shot, document.activeElement);
+      if (shot) open(shot, frame.closest('[data-gallery]')?.querySelector('.shot-thumb.is-active') || document.activeElement);
     });
   });
 

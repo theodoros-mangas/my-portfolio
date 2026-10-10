@@ -1,6 +1,6 @@
 # Theodoros Mangas - Software Engineering Portfolio
 
-Source for my personal portfolio site. I'm a Python/Django engineer building full-stack platforms - custom CMS websites, geospatial pipelines, and validation-heavy systems - for real clients, backed by a decade as a licensed surveyor.
+Source for my personal portfolio site. I'm a Python/Django engineer building full-stack platforms — custom CMS websites, geospatial pipelines, and validation-heavy systems — for real clients, backed by 8 years as a licensed surveyor.
 
 ## Focus
 

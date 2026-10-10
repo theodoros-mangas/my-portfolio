@@ -43,7 +43,7 @@ html{
 body.matrixmode-active.bg-dev{
   background:
     linear-gradient(rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.72)),
-    url('https://i.gifer.com/3HeL.gif') center center / cover fixed no-repeat,
+    url('img/matrix.gif') center center / cover fixed no-repeat,
     var(--bg);
 }
 
@@ -63,14 +63,6 @@ body.matrixmode-active.bg-dev{
 .btn-dev:hover{ border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); }
 .btn-icon{ width: 1em; height: 1em; margin-right: .4em; vertical-align: -0.125em; }
 
-.btn-dev-primary{
-  border: 1px solid rgba(121,242,255,0.35);
-  background: rgba(121,242,255,0.10);
-  color: var(--text);
-  font-family: ui-monospace, monospace;
-}
-.btn-dev-primary:hover{ background: rgba(121,242,255,0.16); }
-
 .terminal{
   border: 1px solid var(--border);
   background: rgba(0,0,0,0.35);
@@ -82,12 +74,6 @@ body.matrixmode-active.bg-dev{
   border-bottom: 1px solid var(--border);
   font-family: ui-monospace, monospace;
   background: rgba(255,255,255,0.03);
-}
-.terminal-body{
-  padding: 16px;
-  font-family: ui-monospace, monospace;
-  font-size: 0.95rem;
-  line-height: 1.55;
 }
 .prompt{ color: var(--accent2); }
 .path{ color: var(--accent); }
@@ -121,6 +107,10 @@ body.matrixmode-active.bg-dev{
   overflow: hidden;
 }
 .panel-title{
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
   padding: 10px 14px;
   border-bottom: 1px solid var(--border);
   font-family: ui-monospace, monospace;
@@ -164,15 +154,6 @@ body.matrixmode-active.bg-dev{
   font-family: ui-monospace, monospace;
 }
 
-.divider{ border-color: rgba(255,255,255,0.10); }
-
-.link-dev{
-  color: var(--accent);
-  text-decoration: none;
-  font-family: ui-monospace, monospace;
-}
-.link-dev:hover{ text-decoration: underline; }
-
 .hint{
   color: rgba(255,255,255,0.65);
 }
@@ -183,13 +164,14 @@ body.matrixmode-active.bg-dev{
 .text-success{
   color: var(--accent2);
 }
-.text-muted{
-  color: var(--muted);
-}
 .error{
   color: var(--danger);
 }
 .terminal-body{
+  padding: 16px;
+  font-family: ui-monospace, monospace;
+  font-size: 0.95rem;
+  line-height: 1.55;
   height: 320px;
   max-height: 60vh;
   overflow-y: auto;
@@ -245,7 +227,7 @@ body.matrixmode-active.bg-dev{
   }
 
   .hero .lead{ font-size: 1.05rem; }
-  .hero h2{ font-size: 1.75rem; }
+  .hero h1{ font-size: 1.75rem; }
 
   .project-card .card-head{
     flex-wrap: wrap;
@@ -320,19 +302,6 @@ body.matrixmode-active.bg-dev{
   border-radius: 50%;
 }
 
-.badge-private{
-  flex: none;
-  align-self: flex-start;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  padding: 4px 12px;
-  font-family: ui-monospace, monospace;
-  font-size: 0.75rem;
-  color: var(--muted);
-  background: rgba(255,255,255,0.03);
-  white-space: nowrap;
-}
-
 .site-header{
   position: sticky;
   top: 0;
@@ -382,44 +351,6 @@ body.matrixmode-active.bg-dev{
   }
   .nav-links::-webkit-scrollbar{ display: none; }
   .nav-links .btn{ flex: none; }
-}
-
-.stats-strip{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 12px;
-  margin-bottom: 2rem;
-}
-
-.stat{
-  border: 1px solid var(--border);
-  background: var(--panel);
-  border-radius: 14px;
-  padding: 16px 14px;
-  text-align: center;
-}
-
-.stat-value{
-  display: block;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-  font-size: 1.65rem;
-  font-weight: 700;
-  line-height: 1.1;
-  color: var(--accent);
-}
-
-.stat-label{
-  display: block;
-  margin-top: 6px;
-  font-size: 0.8rem;
-  color: var(--muted);
-  line-height: 1.35;
-}
-
-@media (max-width: 575.98px){
-  .stat{ padding: 12px 10px; }
-  .stat-value{ font-size: 1.3rem; }
-  .stat-label{ font-size: 0.72rem; }
 }
 
 .projects-grid{
@@ -547,6 +478,7 @@ body.matrixmode-active.bg-dev{
 }
 
 .project-title{
+  margin: 0;
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1.3;
