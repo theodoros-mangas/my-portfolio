@@ -30,12 +30,12 @@
   <text x="74" y="212" font-size="68" font-weight="700" fill="#ffffff">Theodoros Mangas</text>
 
   <!-- positioning line -->
-  <text x="74" y="286" font-size="34" fill="#79f2ff">Python/Django engineer for full-stack client platforms</text>
+  <text x="74" y="286" font-size="34" fill="#79f2ff">Software Engineer · Python · Django · PostgreSQL</text>
 
   <!-- differentiator -->
-  <text x="74" y="352" font-size="27" fill="#ffffff" opacity="0.80">Custom CMS builds, geospatial pipelines, and</text>
-  <text x="74" y="394" font-size="27" fill="#ffffff" opacity="0.80">validation-heavy systems - backed by a decade</text>
-  <text x="74" y="436" font-size="27" fill="#ffffff" opacity="0.80">as a licensed surveyor.</text>
+  <text x="74" y="352" font-size="27" fill="#ffffff" opacity="0.80">Backend-focused, full-stack capable. I build, ship</text>
+  <text x="74" y="394" font-size="27" fill="#ffffff" opacity="0.80">and run Django apps end to end, backed by a</text>
+  <text x="74" y="436" font-size="27" fill="#ffffff" opacity="0.80">surveying &amp; geoinformatics background.</text>
 
   <line x1="74" y1="486" x2="620" y2="486" stroke="url(#rule)" stroke-width="2" />
 
@@ -47,14 +47,14 @@
     <rect x="192" y="514" width="104" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
     <text x="244" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">Django</text>
 
-    <rect x="310" y="514" width="150" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
-    <text x="385" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">PostGIS</text>
+    <rect x="310" y="514" width="170" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
+    <text x="395" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">PostgreSQL</text>
 
-    <rect x="474" y="514" width="130" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
-    <text x="539" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">Leaflet</text>
+    <rect x="494" y="514" width="116" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
+    <text x="552" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">Celery</text>
 
-    <rect x="618" y="514" width="180" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
-    <text x="708" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">DXF/KML/KMZ</text>
+    <rect x="624" y="514" width="116" height="42" rx="21" fill="#9aff79" fill-opacity="0.08" stroke="#9aff79" stroke-opacity="0.25" />
+    <text x="682" y="541" fill="#ffffff" opacity="0.88" text-anchor="middle">Docker</text>
   </g>
 
   <!-- prompt accent -->

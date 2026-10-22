@@ -1,13 +1,13 @@
 # Theodoros Mangas - Software Engineering Portfolio
 
-Source for my personal portfolio site. I'm a Python/Django engineer building full-stack platforms — custom CMS websites, geospatial pipelines, and validation-heavy systems — for real clients, backed by 8 years as a licensed surveyor.
+Source for my personal portfolio site. I'm a software engineer (Python · Django · PostgreSQL), backend-focused and comfortable across the full stack, who builds, ships and runs Django applications end to end, with a surveying and geoinformatics background.
 
 ## Focus
 
-- Backend Python/Django: API design, data modeling, application structure
-- Full-stack client platforms with custom CMS/admin tooling
-- Geospatial pipelines (DXF/KML/KMZ/TXT/JSON) with validation-first handling
-- Practical engineering tooling for real technical-office workflows
+- Backend Python/Django: data modelling, REST APIs (DRF), Celery background jobs, ORM performance
+- Testing and delivery: Django tests in CI with ruff and mypy, Docker Compose deployments on Linux
+- Full-stack platforms with custom CMS/admin tooling, in Greek and English
+- Geospatial pipelines (DXF/KML/KMZ/GeoJSON) and coordinate transformations, validation-first
 
 ## Tech Stack (Website)
 

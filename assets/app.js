@@ -6,7 +6,7 @@ let terminalReady = false;
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas — Software engineer (Python/Django), licensed surveyor'
+    execute: () => 'Theodoros Mangas — Software engineer (Python · Django · PostgreSQL), backend-focused, surveying & geoinformatics background'
   },
   projects: {
     description: 'View my projects',
@@ -434,25 +434,51 @@ function initializeLightbox() {
 
   const image = lightbox.querySelector('.lightbox-img');
   const closeButton = lightbox.querySelector('.lightbox-close');
+  const prevButton = lightbox.querySelector('.lightbox-prev');
+  const nextButton = lightbox.querySelector('.lightbox-next');
+  let shots = [];
+  let index = 0;
+  let gallery = null;
   let lastTrigger = null;
+
+  const render = () => {
+    const shot = shots[index];
+    image.src = shot.currentSrc || shot.src;
+    image.alt = shot.alt || '';
+    lightbox.setAttribute('aria-label', shot.alt || 'Full size screenshot');
+  };
+
+  const step = (delta) => {
+    if (shots.length < 2) return;
+    index = (index + delta + shots.length) % shots.length;
+    render();
+    // Keep the card's own gallery in step, so closing lands on the same shot.
+    gallery?.querySelectorAll('.shot-thumb')[index]?.click();
+  };
 
   const close = () => {
     lightbox.classList.remove('is-open');
     lightbox.hidden = true;
     document.body.style.overflow = '';
     image.src = '';
-    // Return focus to the trigger.
-    if (lastTrigger) {
-      lastTrigger.focus();
-      lastTrigger = null;
-    }
+    // Return focus to the card's active thumbnail (it may have moved while browsing).
+    const target = gallery?.querySelector('.shot-thumb.is-active') || lastTrigger;
+    if (target) target.focus();
+    lastTrigger = null;
+    gallery = null;
   };
 
-  const open = (shot, trigger) => {
-    image.src = shot.currentSrc || shot.src;
-    image.alt = shot.alt || '';
-    lightbox.setAttribute('aria-label', shot.alt || 'Full size screenshot');
-    lastTrigger = trigger;
+  const open = (shot, frame) => {
+    shots = Array.from(frame.querySelectorAll('img'));
+    index = Math.max(0, shots.indexOf(shot));
+    gallery = frame.closest('[data-gallery]');
+    lastTrigger = document.activeElement;
+
+    const multiple = shots.length > 1;
+    prevButton.hidden = !multiple;
+    nextButton.hidden = !multiple;
+
+    render();
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
     // Next frame, so the fade-in transition runs.
@@ -464,14 +490,28 @@ function initializeLightbox() {
     // Delegated to the image, so the letterbox area stays inert.
     frame.addEventListener('click', (e) => {
       const shot = e.target.closest('img');
-      if (shot) open(shot, frame.closest('[data-gallery]')?.querySelector('.shot-thumb.is-active') || document.activeElement);
+      if (shot) open(shot, frame);
     });
   });
 
   closeButton.addEventListener('click', close);
+  prevButton.addEventListener('click', () => step(-1));
+  nextButton.addEventListener('click', () => step(1));
 
   lightbox.addEventListener('click', (e) => {
     if (e.target === lightbox) close();
+  });
+
+  // Horizontal swipe on touch screens.
+  let touchStartX = null;
+  lightbox.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches.length === 1 ? e.touches[0].clientX : null;
+  }, { passive: true });
+  lightbox.addEventListener('touchend', (e) => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(dx) > 50) step(dx < 0 ? 1 : -1);
   });
 
   document.addEventListener('keydown', (e) => {
@@ -481,10 +521,18 @@ function initializeLightbox() {
       close();
       return;
     }
-    // Focus trap: the close button is the only focusable node.
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      step(e.key === 'ArrowRight' ? 1 : -1);
+      return;
+    }
+    // Focus trap: cycle through the visible lightbox buttons.
     if (e.key === 'Tab') {
       e.preventDefault();
-      closeButton.focus();
+      const focusables = [prevButton, nextButton, closeButton].filter((btn) => !btn.hidden);
+      const current = focusables.indexOf(document.activeElement);
+      const next = (current + (e.shiftKey ? -1 : 1) + focusables.length) % focusables.length;
+      focusables[next].focus();
     }
   });
 }
@@ -511,14 +559,21 @@ function initializeTerminalToggle() {
   const wrap = document.getElementById('terminalWrap');
   if (!toggle || !wrap) return;
 
+  const label = toggle.querySelector('.toggle-label');
+  const setLabel = (open) => {
+    if (label) label.textContent = open ? 'close' : 'open';
+  };
+
   const startOpen = toggle.getAttribute('aria-expanded') === 'true';
   wrap.hidden = !startOpen;
+  setLabel(startOpen);
   if (startOpen) buildTerminalOnce();
 
   toggle.addEventListener('click', () => {
     const isOpen = toggle.getAttribute('aria-expanded') === 'true';
     toggle.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
     wrap.hidden = isOpen;
+    setLabel(!isOpen);
 
     if (!isOpen) {
       buildTerminalOnce();
@@ -526,6 +581,75 @@ function initializeTerminalToggle() {
       if (input) input.focus({ preventScroll: true });
     }
   });
+}
+
+// Case studies are native <dialog>s addressed by #case-* hashes, so a single
+// case study can be linked directly. Opening from a card pushes a history entry,
+// which lets the Back button (and swipe-back on phones) close the dialog.
+function initializeCaseStudies() {
+  const dialogs = new Map();
+  document.querySelectorAll('dialog.case-study').forEach((d) => dialogs.set(`#${d.id}`, d));
+  if (!dialogs.size) return;
+
+  let pushedEntry = false;
+  let lastTrigger = null;
+
+  const syncToHash = () => {
+    const target = dialogs.get(window.location.hash);
+    dialogs.forEach((d) => {
+      if (d !== target && d.open) d.close();
+    });
+    if (target && !target.open) {
+      target.showModal();
+      target.querySelector('.case-body').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+  };
+
+  document.querySelectorAll('[data-case-open]').forEach((link) => {
+    link.addEventListener('click', (e) => {
+      const hash = link.getAttribute('href');
+      if (!dialogs.has(hash)) return;
+      e.preventDefault();
+      lastTrigger = link;
+      history.pushState(null, '', hash);
+      pushedEntry = true;
+      syncToHash();
+    });
+  });
+
+  dialogs.forEach((d) => {
+    d.addEventListener('close', () => {
+      document.body.style.overflow = '';
+      // Closed by Esc, the close button or the backdrop: drop the hash too.
+      if (window.location.hash === `#${d.id}`) {
+        if (pushedEntry) {
+          pushedEntry = false;
+          history.back();
+        } else {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
+        }
+      }
+      if (lastTrigger) {
+        lastTrigger.focus({ preventScroll: true });
+        lastTrigger = null;
+      }
+    });
+
+    d.querySelector('[data-case-close]')?.addEventListener('click', () => d.close());
+
+    // Clicks on the backdrop land on the <dialog> itself, outside its content.
+    d.addEventListener('click', (e) => {
+      if (e.target === d) d.close();
+    });
+  });
+
+  window.addEventListener('popstate', () => {
+    if (!dialogs.has(window.location.hash)) pushedEntry = false;
+    syncToHash();
+  });
+
+  syncToHash();
 }
 
 function initializeStickyHeader() {
@@ -541,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initializeGalleries();
   initializeLightbox();
   initializeTerminalToggle();
+  initializeCaseStudies();
   initializeStickyHeader();
   initializeBackToTop();
 });
