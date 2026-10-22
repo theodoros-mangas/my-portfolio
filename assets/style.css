@@ -388,6 +388,18 @@ body.matrixmode-active.bg-dev{
 
 .nav-cv{ flex: none; }
 
+.nav-icon{
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 31px;
+  align-self: stretch;
+  padding-left: 0;
+  padding-right: 0;
+}
+.nav-icon .btn-icon{ margin-right: 0; }
+
 @media (max-width: 767.98px){
   .site-header .container{ padding-top: 10px; padding-bottom: 10px; }
   .header-nav{
