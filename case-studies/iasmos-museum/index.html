@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Iasmos Culture Club Museum case study | Theodoros Mangas</title>
+  <meta name="description" content="Case study: a bilingual Django CMS built for a museum's non-technical moderators, including the media loss, translation fallback and consent banner problems met along the way." />
+  <meta name="author" content="Theodoros Mangas (Θεόδωρος Μάγγας)" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://theodoros-mangas.github.io/my-portfolio/case-studies/iasmos-museum/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Iasmos Culture Club Museum case study | Theodoros Mangas" />
+  <meta property="og:description" content="Case study: a bilingual Django CMS built for a museum's non-technical moderators, including the media loss, translation fallback and consent banner problems met along the way." />
+  <meta property="og:url" content="https://theodoros-mangas.github.io/my-portfolio/case-studies/iasmos-museum/" />
+  <meta property="og:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Theodoros Mangas — Software Engineer (Python · Django)" />
+  <meta property="og:site_name" content="Theodoros Mangas (Θεόδωρος Μάγγας) Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Iasmos Culture Club Museum case study | Theodoros Mangas" />
+  <meta name="twitter:description" content="Case study: a bilingual Django CMS built for a museum's non-technical moderators, including the media loss, translation fallback and consent banner problems met along the way." />
+  <meta name="twitter:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+
+<body class="bg-dev text-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <div class="container py-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="brand">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="ms-2 fw-semibold">teo@portfolio</span>
+        </div>
+        <div class="header-nav">
+          <nav class="nav-links" aria-label="Primary">
+            <a class="btn btn-sm btn-dev" href="../../#projects">Projects</a>
+            <a class="btn btn-sm btn-dev" href="../../#about">About</a>
+            <a class="btn btn-sm btn-dev" href="../../#how-i-work">How I work</a>
+            <a class="btn btn-sm btn-dev" href="../../#experience">Experience</a>
+            <a class="btn btn-sm btn-dev" href="../../#skills">Skills</a>
+            <a class="btn btn-sm btn-dev" href="../../#contact">Contact</a>
+          </nav>
+
+          <a class="btn btn-sm btn-solid nav-cv" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+            rel="noopener">CV</a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://www.linkedin.com/in/theodorosmaggas/" target="_blank"
+            rel="me noopener" aria-label="LinkedIn profile" title="LinkedIn"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://github.com/Teo-Mgs" target="_blank" rel="me noopener"
+            aria-label="GitHub profile" title="GitHub"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container case-main pb-5" id="main">
+    <article class="case-page">
+      <header class="case-page-head">
+        <p class="case-kicker">case-study/iasmos-museum</p>
+        <h1 class="case-title">Iasmos Culture Club Museum: a CMS built for non-technical moderators</h1>
+        <p class="case-meta">Paid client project · built solo in ~3 months · delivered September 2026 · Django 6, SQLite, Docker, Gunicorn, Nginx</p>
+      </header>
+
+      <div class="case-gallery" data-gallery>
+        <div class="shot-frame" id="shots-iasmos">
+          <img src="../../assets/img/screenshots/iasmos_museum_01.webp"
+            alt="Iasmos museum public homepage: bilingual navigation with a photo carousel of the museum building and a news panel"
+            class="is-active" width="1600" height="770" decoding="async"
+            data-caption="Public site — bilingual (EL/EN) with staff-managed carousel and announcements">
+          <img src="../../assets/img/screenshots/iasmos_museum_02.webp"
+            alt="Custom CMS control panel listing carousel slides with published status, edit and delete actions, and a sidebar of manageable content types"
+            width="1600" height="768" loading="lazy" decoding="async"
+            data-caption="Custom CMS — staff manage exhibits, events, pages and media themselves">
+        </div>
+        <div class="shot-thumbs" role="group" aria-label="Iasmos museum screenshots">
+          <button class="shot-thumb is-active" type="button" aria-pressed="true"
+            aria-label="Public homepage">
+            <img src="../../assets/img/screenshots/iasmos_museum_01.webp" alt="" width="160" height="77"
+              decoding="async">
+          </button>
+          <button class="shot-thumb" type="button" aria-pressed="false" tabindex="-1"
+            aria-label="CMS control panel">
+            <img src="../../assets/img/screenshots/iasmos_museum_02.webp" alt="" width="160" height="77"
+              decoding="async">
+          </button>
+        </div>
+        <p class="shot-caption" data-caption-target>Public site — bilingual (EL/EN) with staff-managed carousel
+          and announcements</p>
+      </div>
+
+      <div class="case-body">
+        <h2>Context</h2>
+        <p>The museum's moderators needed to publish exhibits, events and long bilingual history texts themselves,
+          without technical help and without being able to break anything. Rather than bend an off-the-shelf CMS, I
+          built a moderator dashboard around how they actually work, in Greek and English.</p>
+
+        <h2>Hard requirements</h2>
+        <ul class="about-list">
+          <li><strong>Photos anchored to paragraphs.</strong> Moderators place photos beside specific paragraphs of long
+            texts by drag and drop. The catch: Greek and English versions have different paragraph counts. One anchor
+            index serves both languages, and an image whose anchor runs past the shorter text falls back to the gallery
+            when the page renders.</li>
+          <li><strong>Safe deletion.</strong> Moderators can delete anything; only a superuser can restore or purge.</li>
+          <li><strong>Privacy by design.</strong> Self-hosted, cookie-free analytics with daily-rotating visitor hashes,
+            consent-gated YouTube and Maps embeds, moderator Markdown sanitised with nh3, and django-axes login
+            protection.</li>
+          <li><strong>Redesign on request.</strong> The client asked for redesigns in late September, close to
+            delivery, and the content model absorbed them.</li>
+        </ul>
+
+        <h2>What broke</h2>
+        <ul class="about-list">
+          <li><strong>Every image returned 404 (19 August 2026).</strong> After a routine pull and rebuild, all media was
+            gone. An earlier <code>git rm --cached media/</code> had deleted the files on every checkout except the
+            machine that made the commit. I recovered all 95 files (121 MB) from git history with no data lost and
+            wrote a recovery runbook. Media is now covered by the documented backup and restore procedures alongside
+            the database.</li>
+          <li><strong>Blank English pages (1 October).</strong> Content is written in Greek first and translated later.
+            Untranslated fields fell back to English, which was empty. I changed the fallback to Greek, so visitors see
+            the original text instead of a gap.</li>
+          <li><strong>A hidden consent banner (31 August).</strong> Ad blockers were hiding it because of its
+            cookie-consent naming. Renaming it to a neutral site notice brought it back.</li>
+          <li><strong>Oversized images (10 October).</strong> Opaque screenshots were stored as large PNGs. Uploads now
+            convert to JPEG unless they actually use transparency, and a <code>compress_media</code> management command
+            fixed the files already stored.</li>
+        </ul>
+
+        <h2>Result</h2>
+        <p>355 automated tests, documented backup and restore for the database and media, and a site the museum team
+          uses daily. I maintain it on an ongoing basis.</p>
+      </div>
+    </article>
+
+    <section class="mb-4" id="contact">
+      <div class="panel">
+        <h2 class="panel-title">contact/</h2>
+        <div class="panel-body">
+          <p class="mb-3">Open to backend-focused Python/Django roles and full-stack Django positions, as employment
+            or contract.</p>
+          <div class="contact-actions">
+            <a class="btn btn-cta" href="mailto:magg_theod@live.com">magg_theod@live.com</a>
+            <a class="btn btn-solid" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+              rel="noopener">Download CV (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="case-footer-nav" aria-label="Case studies">
+      <a class="btn btn-sm btn-dev" href="../../#projects">← All projects</a>
+            <a class="btn btn-sm btn-dev" href="../handytools/">HandyTools</a>
+            <a class="btn btn-sm btn-dev" href="../citycare/">CityCare</a>
+    </nav>
+
+    <footer class="text-center small mt-5 note-muted">
+      © <span id="year"></span> Theodoros Mangas — Portfolio
+    </footer>
+  </main>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+    <button class="lightbox-close" type="button" aria-label="Close image">✕</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">‹</button>
+    <img class="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">›</button>
+  </div>
+  <script src="../../assets/app.js"></script>
+</body>
+
+</html>

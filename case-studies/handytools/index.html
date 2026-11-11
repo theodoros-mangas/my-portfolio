@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HandyTools case study | Theodoros Mangas</title>
+  <meta name="description" content="Case study: how HandyTools keeps heavy OCR and PDF jobs off the request path with Celery and Redis, and the two production failures that changed the design." />
+  <meta name="author" content="Theodoros Mangas (Θεόδωρος Μάγγας)" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://theodoros-mangas.github.io/my-portfolio/case-studies/handytools/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="HandyTools case study | Theodoros Mangas" />
+  <meta property="og:description" content="Case study: how HandyTools keeps heavy OCR and PDF jobs off the request path with Celery and Redis, and the two production failures that changed the design." />
+  <meta property="og:url" content="https://theodoros-mangas.github.io/my-portfolio/case-studies/handytools/" />
+  <meta property="og:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Theodoros Mangas — Software Engineer (Python · Django)" />
+  <meta property="og:site_name" content="Theodoros Mangas (Θεόδωρος Μάγγας) Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HandyTools case study | Theodoros Mangas" />
+  <meta name="twitter:description" content="Case study: how HandyTools keeps heavy OCR and PDF jobs off the request path with Celery and Redis, and the two production failures that changed the design." />
+  <meta name="twitter:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+
+<body class="bg-dev text-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <div class="container py-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="brand">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="ms-2 fw-semibold">teo@portfolio</span>
+        </div>
+        <div class="header-nav">
+          <nav class="nav-links" aria-label="Primary">
+            <a class="btn btn-sm btn-dev" href="../../#projects">Projects</a>
+            <a class="btn btn-sm btn-dev" href="../../#about">About</a>
+            <a class="btn btn-sm btn-dev" href="../../#how-i-work">How I work</a>
+            <a class="btn btn-sm btn-dev" href="../../#experience">Experience</a>
+            <a class="btn btn-sm btn-dev" href="../../#skills">Skills</a>
+            <a class="btn btn-sm btn-dev" href="../../#contact">Contact</a>
+          </nav>
+
+          <a class="btn btn-sm btn-solid nav-cv" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+            rel="noopener">CV</a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://www.linkedin.com/in/theodorosmaggas/" target="_blank"
+            rel="me noopener" aria-label="LinkedIn profile" title="LinkedIn"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://github.com/Teo-Mgs" target="_blank" rel="me noopener"
+            aria-label="GitHub profile" title="GitHub"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container case-main pb-5" id="main">
+    <article class="case-page">
+      <header class="case-page-head">
+        <p class="case-kicker">case-study/handytools</p>
+        <h1 class="case-title">HandyTools: keeping heavy document jobs off the request path</h1>
+        <p class="case-meta">Own product · built solo · restricted beta · Django 6.1, DRF, Celery 5.6, Redis, PostgreSQL 17</p>
+      </header>
+
+      <div class="case-gallery" data-gallery>
+        <div class="shot-frame" id="shots-handytools">
+          <img src="../../assets/img/screenshots/Handytools_03.webp"
+            alt="HandyTools tool library: a filterable grid of tool cards including Surveyor Toolkit, PDF multi-tool, unit converter and image utilities"
+            class="is-active" width="1600" height="770" decoding="async"
+            data-caption="Tool library — category filters and live search across the modular toolbox">
+          <img src="../../assets/img/screenshots/Handytools_04.webp"
+            alt="Surveyor Toolkit map workspace with a layers sidebar, drawing and measurement toolbar, and an onboarding dialog explaining GeoJSON, KML, KMZ and DXF import"
+            width="1600" height="764" loading="lazy" decoding="async"
+            data-caption="Surveyor Toolkit — import DXF/KML/KMZ/GeoJSON, measure, and convert coordinates">
+          <img src="../../assets/img/screenshots/Handytools_02.webp"
+            alt="HandyTools landing page headline about licensing, priority queueing and API access, beside a system status panel showing API, queue and database online"
+            width="1600" height="616" loading="lazy" decoding="async"
+            data-caption="Landing — licensing tiers, API access, and live system status">
+        </div>
+        <div class="shot-thumbs" role="group" aria-label="HandyTools screenshots">
+          <button class="shot-thumb is-active" type="button" aria-pressed="true"
+            aria-label="Tool library">
+            <img src="../../assets/img/screenshots/Handytools_03.webp" alt="" width="160" height="77" decoding="async">
+          </button>
+          <button class="shot-thumb" type="button" aria-pressed="false" tabindex="-1"
+            aria-label="Surveyor toolkit map">
+            <img src="../../assets/img/screenshots/Handytools_04.webp" alt="" width="160" height="76" decoding="async">
+          </button>
+          <button class="shot-thumb" type="button" aria-pressed="false" tabindex="-1" aria-label="Landing page">
+            <img src="../../assets/img/screenshots/Handytools_02.webp" alt="" width="160" height="62" decoding="async">
+          </button>
+        </div>
+        <p class="shot-caption" data-caption-target>Tool library — category filters and live search across the
+          modular toolbox</p>
+      </div>
+
+      <div class="case-body">
+        <h2>Context</h2>
+        <p>HandyTools runs OCR and PDF conversions that can take minutes on CPU-only hardware: EasyOCR (PyTorch) and
+          Tesseract for text recognition, PyMuPDF and pdf2docx for documents. Uploads go up to 50 MB, free accounts have
+          a daily allowance, and the whole thing runs as one Docker Compose stack on a single Hetzner server. Requests
+          had to stay fast, and the server had to survive a bad file.</p>
+
+        <h2>Design</h2>
+        <ul class="about-list">
+          <li><strong>Files stay on disk.</strong> The view stages the upload and queues only its path, so large files
+            never pass through Redis. The job id doubles as the Celery task id.</li>
+          <li><strong>Job state lives in the cache, not the database.</strong> Status is short-lived, high-churn data,
+            so it sits in Redis with a TTL and expires on its own. PostgreSQL holds what has to last: users, plans,
+            quotas and usage rows.</li>
+          <li><strong>The browser polls.</strong> A status endpoint checks that the job belongs to the requester; the
+            result is downloaded once and deleted after it is served.</li>
+          <li><strong>Workers are configured defensively:</strong> late acknowledgement, prefetch 1, three attempts 10 s
+            apart, soft/hard time limits of 270/300 s, concurrency 2, and a recycle after 100 tasks.</li>
+          <li><strong>Cancelling is cooperative.</strong> A cache flag is checked between pages, and
+            <code>revoke()</code> covers jobs that haven't started. Celery beat sweeps expired job files, orphaned media
+            and lapsed subscriptions.</li>
+        </ul>
+
+        <figure class="case-figure">
+          <svg class="dg" viewBox="0 80 760 372" role="img" font-size="13"
+            aria-label="Architecture: the browser talks to Nginx and a Gunicorn/DRF web container backed by PostgreSQL. The web container stages uploads on disk and queues the file path through Redis. A Celery worker reads tasks from Redis, processes files with the domain code and writes results back to disk. Celery beat schedules cleanup tasks.">
+            <defs>
+              <marker id="dgArrowA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+            </defs>
+            <g class="dg-line">
+              <path d="M184 126H208" marker-end="url(#dgArrowA)" />
+              <path d="M368 126H392" marker-end="url(#dgArrowA)" />
+              <path d="M552 126H576" marker-end="url(#dgArrowA)" />
+              <path d="M432 162V266H368" marker-end="url(#dgArrowA)" />
+              <path d="M512 162V266H576" marker-end="url(#dgArrowA)" />
+              <path d="M288 302V406H392" marker-end="url(#dgArrowA)" marker-start="url(#dgArrowA)" />
+              <path d="M552 406H656V302" marker-end="url(#dgArrowA)" />
+              <path d="M104 370V266H208" marker-end="url(#dgArrowA)" />
+            </g>
+            <rect class="dg-box" x="24" y="90" width="160" height="72" rx="8" />
+            <text class="dg-name" x="104" y="114" text-anchor="middle">Browser</text>
+            <text class="dg-sub" x="104" y="134" text-anchor="middle">submits a job,</text>
+            <text class="dg-sub" x="104" y="150" text-anchor="middle">polls for status</text>
+            <rect class="dg-box" x="208" y="90" width="160" height="72" rx="8" />
+            <text class="dg-name" x="288" y="114" text-anchor="middle">Nginx on host</text>
+            <text class="dg-sub" x="288" y="134" text-anchor="middle">TLS termination</text>
+            <text class="dg-sub" x="288" y="150" text-anchor="middle">serves /media/</text>
+            <rect class="dg-box" x="392" y="90" width="160" height="72" rx="8" />
+            <text class="dg-name" x="472" y="114" text-anchor="middle">Web container</text>
+            <text class="dg-sub" x="472" y="134" text-anchor="middle">Gunicorn + DRF views</text>
+            <text class="dg-sub" x="472" y="150" text-anchor="middle">domain code in tools/</text>
+            <rect class="dg-box" x="576" y="90" width="160" height="72" rx="8" />
+            <text class="dg-name" x="656" y="114" text-anchor="middle">PostgreSQL 17</text>
+            <text class="dg-sub" x="656" y="134" text-anchor="middle">users, plans, quotas,</text>
+            <text class="dg-sub" x="656" y="150" text-anchor="middle">usage rows</text>
+            <rect class="dg-box" x="208" y="230" width="160" height="72" rx="8" />
+            <text class="dg-name" x="288" y="254" text-anchor="middle">Redis</text>
+            <text class="dg-sub" x="288" y="274" text-anchor="middle">broker (db 0), cache</text>
+            <text class="dg-sub" x="288" y="290" text-anchor="middle">(db 1): job state + TTL</text>
+            <rect class="dg-box" x="576" y="230" width="160" height="72" rx="8" />
+            <text class="dg-name" x="656" y="254" text-anchor="middle">Job files on disk</text>
+            <text class="dg-sub" x="656" y="274" text-anchor="middle">uploads and results,</text>
+            <text class="dg-sub" x="656" y="290" text-anchor="middle">shared web + worker</text>
+            <rect class="dg-box dg-key" x="392" y="370" width="160" height="72" rx="8" />
+            <text class="dg-name" x="472" y="394" text-anchor="middle">Celery worker</text>
+            <text class="dg-sub" x="472" y="414" text-anchor="middle">OCR, PDF via tools/</text>
+            <text class="dg-sub" x="472" y="430" text-anchor="middle">retries, time limits</text>
+            <rect class="dg-box" x="24" y="370" width="160" height="72" rx="8" />
+            <text class="dg-name" x="104" y="394" text-anchor="middle">Celery beat</text>
+            <text class="dg-sub" x="104" y="414" text-anchor="middle">cleanup, expiry</text>
+            <text class="dg-sub" x="104" y="430" text-anchor="middle">on a schedule</text>
+            <text class="dg-sub" x="424" y="214" text-anchor="end">queues task (file path)</text>
+            <text class="dg-sub" x="520" y="214" text-anchor="start">stages upload</text>
+            <text class="dg-sub" x="296" y="346" text-anchor="start">tasks in, status out</text>
+            <text class="dg-sub" x="648" y="356" text-anchor="end">writes results</text>
+            <text class="dg-sub" x="112" y="326" text-anchor="start">schedules tasks</text>
+          </svg>
+          <figcaption>Requests stay fast; heavy OCR and PDF work runs in Celery. One Docker Compose stack on Hetzner,
+            behind Nginx on the host, with a single Celery queue on Redis.</figcaption>
+        </figure>
+
+        <h2>What broke: a failed job that wasn't</h2>
+        <p>The task's error handler marked a job <em>failed</em> and then asked Celery to retry. That was a deliberate
+          choice, so the browser's poller would stop spinning, and it turned out to be wrong in three ways:</p>
+        <ul class="about-list">
+          <li>The browser stops polling at <em>failed</em>, so a retry that succeeded was never collected.</li>
+          <li>A failed usage row gives the free daily allowance back, so a run that failed and then succeeded was
+            free.</li>
+          <li>Users saw the raw exception text.</li>
+        </ul>
+        <p>I caught it in a full code review on 16 October 2026, before any user reported it. The fix is a single
+          retry-or-fail path: the job stays <em>processing</em> until the last attempt, only then is it marked failed
+          with a generic message, and the details go to the logs. A regression test,
+          <code>test_crash_then_successful_retry_is_not_reported_failed</code>, keeps it that way.</p>
+
+        <figure class="case-figure">
+          <svg class="dg" viewBox="0 66 760 270" role="img" font-size="13"
+            aria-label="Before the fix: attempt 1 crashes, the job is set to failed before retrying, the browser stops polling and the free run is refunded, and the successful retry is never collected. After the fix: attempt 1 crashes and a retry is scheduled, the job stays processing while the browser keeps polling, the retry succeeds and completes, and the browser downloads the result with the run counted once.">
+            <defs>
+              <marker id="dgArrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6"
+                orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+            </defs>
+            <text class="dg-tag-bad" x="24" y="82" font-size="12">BEFORE</text>
+            <text class="dg-tag-good" x="24" y="202" font-size="12">AFTER</text>
+            <g class="dg-line">
+              <path d="M184 130H208" marker-end="url(#dgArrowB)" />
+              <path d="M368 130H392" marker-end="url(#dgArrowB)" />
+              <path d="M552 130H576" marker-end="url(#dgArrowB)" />
+              <path d="M184 250H208" marker-end="url(#dgArrowB)" />
+              <path d="M368 250H392" marker-end="url(#dgArrowB)" />
+              <path d="M552 250H576" marker-end="url(#dgArrowB)" />
+            </g>
+            <rect class="dg-box" x="24" y="94" width="160" height="72" rx="8" />
+            <text class="dg-name" x="104" y="118" text-anchor="middle">Attempt 1 crashes</text>
+            <text class="dg-sub" x="104" y="138" text-anchor="middle">transient error,</text>
+            <text class="dg-sub" x="104" y="154" text-anchor="middle">Celery will retry</text>
+            <rect class="dg-box dg-bad" x="208" y="94" width="160" height="72" rx="8" />
+            <text class="dg-name" x="288" y="118" text-anchor="middle">Status: failed</text>
+            <text class="dg-sub" x="288" y="138" text-anchor="middle">set before retrying;</text>
+            <text class="dg-sub" x="288" y="154" text-anchor="middle">error text shown</text>
+            <rect class="dg-box" x="392" y="94" width="160" height="72" rx="8" />
+            <text class="dg-name" x="472" y="118" text-anchor="middle">Browser stops</text>
+            <text class="dg-sub" x="472" y="138" text-anchor="middle">polling at failed;</text>
+            <text class="dg-sub" x="472" y="154" text-anchor="middle">free run refunded</text>
+            <rect class="dg-box dg-bad" x="576" y="94" width="160" height="72" rx="8" />
+            <text class="dg-name" x="656" y="118" text-anchor="middle">Retry succeeds</text>
+            <text class="dg-sub" x="656" y="138" text-anchor="middle">result is never</text>
+            <text class="dg-sub" x="656" y="154" text-anchor="middle">collected</text>
+            <rect class="dg-box" x="24" y="214" width="160" height="72" rx="8" />
+            <text class="dg-name" x="104" y="238" text-anchor="middle">Attempt 1 crashes</text>
+            <text class="dg-sub" x="104" y="258" text-anchor="middle">error logged;</text>
+            <text class="dg-sub" x="104" y="274" text-anchor="middle">retry scheduled</text>
+            <rect class="dg-box" x="208" y="214" width="160" height="72" rx="8" />
+            <text class="dg-name" x="288" y="238" text-anchor="middle">Still processing</text>
+            <text class="dg-sub" x="288" y="258" text-anchor="middle">browser keeps</text>
+            <text class="dg-sub" x="288" y="274" text-anchor="middle">polling</text>
+            <rect class="dg-box dg-good" x="392" y="214" width="160" height="72" rx="8" />
+            <text class="dg-name" x="472" y="238" text-anchor="middle">Retry succeeds</text>
+            <text class="dg-sub" x="472" y="258" text-anchor="middle">status: completed</text>
+            <rect class="dg-box" x="576" y="214" width="160" height="72" rx="8" />
+            <text class="dg-name" x="656" y="238" text-anchor="middle">Browser downloads</text>
+            <text class="dg-sub" x="656" y="258" text-anchor="middle">run counted once,</text>
+            <text class="dg-sub" x="656" y="274" text-anchor="middle">as it should be</text>
+            <text class="dg-sub" x="24" y="320">Only when all 3 attempts fail is the job marked failed, with a generic
+              message; exception details go only to the logs.</text>
+          </svg>
+          <figcaption>The fix: a job is marked failed only after its last retry. Fixed 16 October 2026, covered by a
+            regression test.</figcaption>
+        </figure>
+
+        <h2>What broke: the A0 plot that killed a worker</h2>
+        <p>On 21 October 2026 a real A0 CAD plot made a worker run out of memory. Its PDF text was glyph-coded, so text
+          extraction found nothing usable and the job fell back to slow, tiled OCR. A worker killed by the operating
+          system runs no <code>except</code> blocks, so the job sat at <em>processing</em> forever. I fixed it in two
+          places:</p>
+        <ul class="about-list">
+          <li>A custom Celery request class whose <code>on_failure</code> and <code>on_timeout</code> hooks mark the job
+            failed even when the task's own code never gets the chance.</li>
+          <li>Decoding the PDF's own font maps so the text can be read directly, which took that plot from minutes to
+            about one second.</li>
+        </ul>
+
+        <h2>Result and next steps</h2>
+        <p>About 700 tests run in GitHub Actions alongside ruff, mypy and a missing-migration check, and a restricted
+          beta is open to invited engineers. Next up: wiring paid-tier priority into Celery routing (the data model
+          exists; the routing doesn't yet) and Stripe billing.</p>
+      </div>
+    </article>
+
+    <section class="mb-4" id="contact">
+      <div class="panel">
+        <h2 class="panel-title">contact/</h2>
+        <div class="panel-body">
+          <p class="mb-3">Open to backend-focused Python/Django roles and full-stack Django positions, as employment
+            or contract.</p>
+          <div class="contact-actions">
+            <a class="btn btn-cta" href="mailto:magg_theod@live.com">magg_theod@live.com</a>
+            <a class="btn btn-solid" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+              rel="noopener">Download CV (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="case-footer-nav" aria-label="Case studies">
+      <a class="btn btn-sm btn-dev" href="../../#projects">← All projects</a>
+            <a class="btn btn-sm btn-dev" href="../iasmos-museum/">Iasmos museum</a>
+            <a class="btn btn-sm btn-dev" href="../citycare/">CityCare</a>
+    </nav>
+
+    <footer class="text-center small mt-5 note-muted">
+      © <span id="year"></span> Theodoros Mangas — Portfolio
+    </footer>
+  </main>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+    <button class="lightbox-close" type="button" aria-label="Close image">✕</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">‹</button>
+    <img class="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">›</button>
+  </div>
+  <script src="../../assets/app.js"></script>
+</body>
+
+</html>

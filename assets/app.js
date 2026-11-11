@@ -6,7 +6,7 @@ let terminalReady = false;
 const commands = {
   whoareyou: {
     description: 'Display current user',
-    execute: () => 'Theodoros Mangas — Software engineer (Python · Django · PostgreSQL), backend-focused, surveying & geoinformatics background'
+    execute: () => 'Theodoros Mangas — Software engineer (Python · Django), backend-focused, surveying & geoinformatics background'
   },
   projects: {
     description: 'View my projects',
@@ -282,15 +282,23 @@ const easterEggs = [
       '<pre class="mb-0" style="font-size:.85em;line-height:1.4">' +
       'theodoros/portfolio\n' +
       '├── index.html\n' +
+      '├── 404.html\n' +
+      '├── robots.txt\n' +
+      '├── sitemap.xml\n' +
       '├── README.md\n' +
       '├── LICENSE\n' +
+      '├── case-studies/\n' +
+      '│   ├── handytools/\n' +
+      '│   ├── iasmos-museum/\n' +
+      '│   └── citycare/\n' +
       '└── assets/\n' +
       '    ├── app.js\n' +
       '    ├── style.css\n' +
       '    ├── files/\n' +
       '    │   └── Theodoros_Mangas_CV.pdf\n' +
       '    └── img/\n' +
-      '        ├── favicon.png\n' +
+      '        ├── favicon-32.png\n' +
+      '        ├── apple-touch-icon.png\n' +
       '        ├── og-card.png\n' +
       '        └── screenshots/</pre>'
   },
@@ -403,7 +411,7 @@ function initializeGalleries() {
       thumbs.forEach((btn, i) => {
         const active = i === index;
         btn.classList.toggle('is-active', active);
-        btn.setAttribute('aria-selected', active ? 'true' : 'false');
+        btn.setAttribute('aria-pressed', active ? 'true' : 'false');
         btn.tabIndex = active ? 0 : -1;
       });
       if (caption) {
@@ -583,73 +591,23 @@ function initializeTerminalToggle() {
   });
 }
 
-// Case studies are native <dialog>s addressed by #case-* hashes, so a single
-// case study can be linked directly. Opening from a card pushes a history entry,
-// which lets the Back button (and swipe-back on phones) close the dialog.
-function initializeCaseStudies() {
-  const dialogs = new Map();
-  document.querySelectorAll('dialog.case-study').forEach((d) => dialogs.set(`#${d.id}`, d));
-  if (!dialogs.size) return;
+// Case studies used to be dialogs addressed by #case-* hashes; keep old links alive.
+const LEGACY_CASE_PAGES = {
+  '#case-handytools': 'case-studies/handytools/',
+  '#case-iasmos': 'case-studies/iasmos-museum/',
+  '#case-citycare': 'case-studies/citycare/'
+};
 
-  let pushedEntry = false;
-  let lastTrigger = null;
+function redirectLegacyCaseLinks() {
+  // Home page only: the targets are relative to the site root.
+  if (!document.getElementById('terminalWrap')) return;
+  const target = LEGACY_CASE_PAGES[window.location.hash];
+  if (target) window.location.replace(target);
+}
 
-  const syncToHash = () => {
-    const target = dialogs.get(window.location.hash);
-    dialogs.forEach((d) => {
-      if (d !== target && d.open) d.close();
-    });
-    if (target && !target.open) {
-      target.showModal();
-      target.querySelector('.case-body').scrollTop = 0;
-      document.body.style.overflow = 'hidden';
-    }
-  };
-
-  document.querySelectorAll('[data-case-open]').forEach((link) => {
-    link.addEventListener('click', (e) => {
-      const hash = link.getAttribute('href');
-      if (!dialogs.has(hash)) return;
-      e.preventDefault();
-      lastTrigger = link;
-      history.pushState(null, '', hash);
-      pushedEntry = true;
-      syncToHash();
-    });
-  });
-
-  dialogs.forEach((d) => {
-    d.addEventListener('close', () => {
-      document.body.style.overflow = '';
-      // Closed by Esc, the close button or the backdrop: drop the hash too.
-      if (window.location.hash === `#${d.id}`) {
-        if (pushedEntry) {
-          pushedEntry = false;
-          history.back();
-        } else {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
-        }
-      }
-      if (lastTrigger) {
-        lastTrigger.focus({ preventScroll: true });
-        lastTrigger = null;
-      }
-    });
-
-    d.querySelector('[data-case-close]')?.addEventListener('click', () => d.close());
-
-    // Clicks on the backdrop land on the <dialog> itself, outside its content.
-    d.addEventListener('click', (e) => {
-      if (e.target === d) d.close();
-    });
-  });
-
-  window.addEventListener('popstate', () => {
-    if (!dialogs.has(window.location.hash)) pushedEntry = false;
-    syncToHash();
-  });
-
-  syncToHash();
+function initializeYear() {
+  const year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
 }
 
 function initializeStickyHeader() {
@@ -661,11 +619,13 @@ function initializeStickyHeader() {
   update();
 }
 
+redirectLegacyCaseLinks();
+
 document.addEventListener('DOMContentLoaded', () => {
   initializeGalleries();
   initializeLightbox();
   initializeTerminalToggle();
-  initializeCaseStudies();
+  initializeYear();
   initializeStickyHeader();
   initializeBackToTop();
 });

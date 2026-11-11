@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CityCare case study | Theodoros Mangas</title>
+  <meta name="description" content="Case study: CityCare, a Django app that lets volunteer teams log care, cleaning and watering work on a live Leaflet city map, with roles, intake and statistics." />
+  <meta name="author" content="Theodoros Mangas (Θεόδωρος Μάγγας)" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="canonical" href="https://theodoros-mangas.github.io/my-portfolio/case-studies/citycare/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="CityCare case study | Theodoros Mangas" />
+  <meta property="og:description" content="Case study: CityCare, a Django app that lets volunteer teams log care, cleaning and watering work on a live Leaflet city map, with roles, intake and statistics." />
+  <meta property="og:url" content="https://theodoros-mangas.github.io/my-portfolio/case-studies/citycare/" />
+  <meta property="og:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Theodoros Mangas — Software Engineer (Python · Django)" />
+  <meta property="og:site_name" content="Theodoros Mangas (Θεόδωρος Μάγγας) Portfolio" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="CityCare case study | Theodoros Mangas" />
+  <meta name="twitter:description" content="Case study: CityCare, a Django app that lets volunteer teams log care, cleaning and watering work on a live Leaflet city map, with roles, intake and statistics." />
+  <meta name="twitter:image" content="https://theodoros-mangas.github.io/my-portfolio/assets/img/og-card.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../../assets/img/favicon-32.png" />
+  <link rel="apple-touch-icon" href="../../assets/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="../../assets/style.css" />
+</head>
+
+<body class="bg-dev text-light">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header" id="siteHeader">
+    <div class="container py-3">
+      <div class="d-flex justify-content-between align-items-center flex-wrap">
+        <div class="brand">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+          <span class="ms-2 fw-semibold">teo@portfolio</span>
+        </div>
+        <div class="header-nav">
+          <nav class="nav-links" aria-label="Primary">
+            <a class="btn btn-sm btn-dev" href="../../#projects">Projects</a>
+            <a class="btn btn-sm btn-dev" href="../../#about">About</a>
+            <a class="btn btn-sm btn-dev" href="../../#how-i-work">How I work</a>
+            <a class="btn btn-sm btn-dev" href="../../#experience">Experience</a>
+            <a class="btn btn-sm btn-dev" href="../../#skills">Skills</a>
+            <a class="btn btn-sm btn-dev" href="../../#contact">Contact</a>
+          </nav>
+
+          <a class="btn btn-sm btn-solid nav-cv" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+            rel="noopener">CV</a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://www.linkedin.com/in/theodorosmaggas/" target="_blank"
+            rel="me noopener" aria-label="LinkedIn profile" title="LinkedIn"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a class="btn btn-sm btn-dev nav-icon" href="https://github.com/Teo-Mgs" target="_blank" rel="me noopener"
+            aria-label="GitHub profile" title="GitHub"><svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container case-main pb-5" id="main">
+    <article class="case-page">
+      <header class="case-page-head">
+        <p class="case-kicker">case-study/citycare</p>
+        <h1 class="case-title">CityCare: coordinating volunteer teams across a city's green spaces</h1>
+        <p class="case-meta">Personal project · deploy-ready · Django 6, Python 3.13, PostgreSQL 17, Leaflet, Chart.js, Bootstrap 5.3</p>
+      </header>
+
+      <div class="case-gallery" data-gallery>
+        <div class="shot-frame" id="shots-citycare">
+          <img src="../../assets/img/screenshots/CityCare_02.webp"
+            alt="CityCare actions-by-location view: a searchable list of 11 city locations beside a Leaflet map with pins and a panel of logged volunteer watering actions"
+            class="is-active" width="1600" height="762" decoding="async"
+            data-caption="Live city map — volunteer actions logged against real locations">
+          <img src="../../assets/img/screenshots/CityCare_03.webp"
+            alt="CityCare admin panel managing action types, with a sidebar for volunteer applications, locations, teams, users and team actions"
+            width="1600" height="764" loading="lazy" decoding="async"
+            data-caption="Admin panel — action types, teams, locations and volunteer applications">
+          <img src="../../assets/img/screenshots/CityCare_01.webp"
+            alt="CityCare landing page with illustrated cards for the Cleaning, Watering and Caring volunteer workflows"
+            width="1600" height="764" loading="lazy" decoding="async"
+            data-caption="Landing — each volunteer workflow gets its own card and map view">
+        </div>
+        <div class="shot-thumbs" role="group" aria-label="CityCare screenshots">
+          <button class="shot-thumb is-active" type="button" aria-pressed="true"
+            aria-label="Live city map">
+            <img src="../../assets/img/screenshots/CityCare_02.webp" alt="" width="160" height="76" decoding="async">
+          </button>
+          <button class="shot-thumb" type="button" aria-pressed="false" tabindex="-1" aria-label="Admin panel">
+            <img src="../../assets/img/screenshots/CityCare_03.webp" alt="" width="160" height="76" decoding="async">
+          </button>
+          <button class="shot-thumb" type="button" aria-pressed="false" tabindex="-1" aria-label="Landing page">
+            <img src="../../assets/img/screenshots/CityCare_01.webp" alt="" width="160" height="76" decoding="async">
+          </button>
+        </div>
+        <p class="shot-caption" data-caption-target>Live city map — volunteer actions logged against real
+          locations</p>
+      </div>
+
+      <div class="case-body">
+        <h2>Context</h2>
+        <p>Volunteer teams look after a city's green spaces. CityCare lets them record care, cleaning and watering
+          work against named, geolocated places, and shows who did what, where and when. New volunteers apply through a
+          public form, and an admin panel manages action types, places, teams and people. The interface is in Greek
+          and English.</p>
+
+        <h2>Design</h2>
+        <ul class="about-list">
+          <li><strong>A map that shows what needs attention.</strong> Each action page plots every location on a
+            Leaflet map with OpenStreetMap tiles. Pin colour shows how recently the work was done: green within 14 days,
+            yellow within 28, red after that. Clicking a pin opens that location's form, and admins place new
+            locations by clicking on a map. Leaflet, Chart.js and Bootstrap are self-hosted, with no CDN
+            dependencies.</li>
+          <li><strong>Volunteer intake with an audit trail.</strong> Each application is stored as pending, accepted or
+            declined, with who decided and when. Accepting one emails a single-use invite link that expires; signing up
+            creates the user and their personal team in a single transaction, so a half-finished sign-up can't leave
+            orphaned records.</li>
+          <li><strong>Roles in one place.</strong> Each person has a role per team (member, team lead or moderator),
+            plus site admins. Every view checks access through a single <code>permissions.py</code> module.</li>
+          <li><strong>One query for the statistics.</strong> A single aggregate (<code>TruncDay</code> +
+            <code>values()</code> + <code>annotate(Count)</code>) groups actions by day and team, then gets reshaped into
+            per-team series for Chart.js, with pinch-zoom on touch screens.</li>
+          <li><strong>Safe sorting.</strong> List views take sort order from query parameters, but only fields on an
+            allowlist reach <code>order_by</code>.</li>
+        </ul>
+
+        <h2>How it evolved</h2>
+        <ul class="about-list">
+          <li><strong>From hardcoded choices to data.</strong> The first version had three fixed action types. They're
+            now database rows, each with a Greek and English name, description, card image, icon, marker colour, order
+            and active flag, and they drive the landing cards and the <code>/action/&lt;slug&gt;/</code> pages. A data
+            migration moved the existing records across, and the old <code>/caring/</code>, <code>/cleaning/</code> and
+            <code>/watering/</code> URLs redirect permanently, so no links broke.</li>
+          <li><strong>From SQLite to PostgreSQL.</strong> The project now targets PostgreSQL 17, and CI runs the test
+            suite against both SQLite and PostgreSQL.</li>
+        </ul>
+
+        <h2>Quality</h2>
+        <p>258 tests run in GitHub Actions on both databases. The project is deployment-ready; the next step is a first
+          rollout with real volunteer teams.</p>
+      </div>
+    </article>
+
+    <section class="mb-4" id="contact">
+      <div class="panel">
+        <h2 class="panel-title">contact/</h2>
+        <div class="panel-body">
+          <p class="mb-3">Open to backend-focused Python/Django roles and full-stack Django positions, as employment
+            or contract.</p>
+          <div class="contact-actions">
+            <a class="btn btn-cta" href="mailto:magg_theod@live.com">magg_theod@live.com</a>
+            <a class="btn btn-solid" href="../../assets/files/Theodoros_Mangas_CV.pdf" target="_blank"
+              rel="noopener">Download CV (PDF)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <nav class="case-footer-nav" aria-label="Case studies">
+      <a class="btn btn-sm btn-dev" href="../../#projects">← All projects</a>
+            <a class="btn btn-sm btn-dev" href="../handytools/">HandyTools</a>
+            <a class="btn btn-sm btn-dev" href="../iasmos-museum/">Iasmos museum</a>
+    </nav>
+
+    <footer class="text-center small mt-5 note-muted">
+      © <span id="year"></span> Theodoros Mangas — Portfolio
+    </footer>
+  </main>
+  <button id="backToTop" class="back-to-top" type="button" aria-label="Back to top" title="Back to top">↑</button>
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" hidden>
+    <button class="lightbox-close" type="button" aria-label="Close image">✕</button>
+    <button class="lightbox-nav lightbox-prev" type="button" aria-label="Previous image">‹</button>
+    <img class="lightbox-img" src="" alt="">
+    <button class="lightbox-nav lightbox-next" type="button" aria-label="Next image">›</button>
+  </div>
+  <script src="../../assets/app.js"></script>
+</body>
+
+</html>
